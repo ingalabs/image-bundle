@@ -10,7 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Repository\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
-use IngaLabs\Bundle\ImageBundle\Model\Image;
 
 /**
  * ImageRepository.
@@ -19,15 +18,4 @@ use IngaLabs\Bundle\ImageBundle\Model\Image;
  */
 class ImageRepository extends EntityRepository
 {
-    /**
-     * Find all ordered by name.
-     *
-     * @return Image[]
-     */
-    public function findAllOrderedByName()
-    {
-        return $this->createQueryBuilder()
-            ->orderBy('name', 'ASC')
-            ->getResult();
-    }
 }

@@ -10,7 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Repository\MongoDB;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use IngaLabs\Bundle\ImageBundle\Model\Image;
 
 /**
  * ImageRepository.
@@ -19,16 +18,4 @@ use IngaLabs\Bundle\ImageBundle\Model\Image;
  */
 class ImageRepository extends DocumentRepository
 {
-    /**
-     * Find all ordered by name.
-     *
-     * @return Image[]
-     */
-    public function findAllOrderedByName()
-    {
-        return $this->createQueryBuilder()
-            ->sort('name', 'ASC')
-            ->getQuery()
-            ->execute();
-    }
 }

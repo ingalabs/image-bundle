@@ -1,0 +1,32 @@
+IngaLabs\Bundle\ImageBundle\Model\Image:
+    type: entity
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\Doctrine\ImageRepository'
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        type:
+            type: string
+            length: 10
+        hash:
+            type: string
+            length: 32
+            unique: true
+        width:
+            type: integer
+        height:
+            type: integer
+        caption:
+            type: string
+            length: 1024
+            nullable: true
+        originalName:
+            type: string
+            length: 255
+        createdAt:
+            type: datetime
+        lastModifiedAt:
+            type: datetime
+        animated:
+            type: boolean

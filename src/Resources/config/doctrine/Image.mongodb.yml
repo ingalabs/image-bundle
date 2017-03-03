@@ -1,7 +1,0 @@
-IngaLabs\Bundle\ImageBundle\Model\Image:
-    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\MongoDB\ImageRepository'
-    fields:
-        id:
-            id: true
-        name:
-            type: string
