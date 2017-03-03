@@ -1,0 +1,10 @@
+IngaLabs\Bundle\ImageBundle\Model\Size:
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\MongoDB\SizeRepository'
+    fields:
+        id:
+            id: true
+        shortName:
+            type: string
+            length: 10
+        maxSize:
+            type: integer

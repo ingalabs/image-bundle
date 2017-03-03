@@ -1,0 +1,13 @@
+IngaLabs\Bundle\ImageBundle\Model\Size:
+    type: entity
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\Doctrine\SizeRepository'
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        shortName:
+            type: string
+            length: 10
+        maxSize:
+            type: integer

@@ -1,0 +1,12 @@
+IngaLabs\Bundle\ImageBundle\Model\Aspect:
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\MongoDB\AspectRepository'
+    fields:
+        id:
+            id: true
+        shortName:
+            type: string
+            length: 10
+        width:
+            type: integer
+        height:
+            type: integer
