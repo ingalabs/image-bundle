@@ -28,7 +28,7 @@ class IngaLabsImageBundle extends Bundle
     {
         parent::build($container);
 
-        $modelDir = realpath(__DIR__.'/Resources/config/doctrine');
+        $modelDir = realpath(__DIR__.'/Resources/config/doctrine-entities');
         $mappings = [
             $modelDir => Model::class,
         ];

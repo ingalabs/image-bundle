@@ -1,0 +1,29 @@
+IngaLabs\Bundle\ImageBundle\Model\Image:
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\MongoDB\ImageRepository'
+    fields:
+        id:
+            id: true
+        type:
+            type: string
+            length: 10
+        hash:
+            type: string
+            length: 32
+            unique: true
+        width:
+            type: integer
+        height:
+            type: integer
+        caption:
+            type: string
+            length: 1024
+            nullable: true
+        originalName:
+            type: string
+            length: 255
+        createdAt:
+            type: date
+        lastModifiedAt:
+            type: date
+        animated:
+            type: boolean

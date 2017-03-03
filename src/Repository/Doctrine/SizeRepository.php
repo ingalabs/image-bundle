@@ -12,10 +12,10 @@ namespace IngaLabs\Bundle\ImageBundle\Repository\Doctrine;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ImageRepository.
+ * SizeRepository.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageRepository extends EntityRepository
+class SizeRepository extends EntityRepository
 {
 }

@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace IngaLabs\Bundle\ImageBundle\Repository\Doctrine;
+namespace IngaLabs\Bundle\ImageBundle\Repository\MongoDB;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
- * ImageRepository.
+ * SizeRepository.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageRepository extends EntityRepository
+class SizeRepository extends DocumentRepository
 {
 }

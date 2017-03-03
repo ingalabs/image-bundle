@@ -1,0 +1,15 @@
+IngaLabs\Bundle\ImageBundle\Model\Aspect:
+    type: entity
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\Doctrine\AspectRepository'
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        shortName:
+            type: string
+            length: 10
+        width:
+            type: integer
+        height:
+            type: integer
