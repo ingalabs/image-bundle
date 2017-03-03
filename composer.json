@@ -1,0 +1,44 @@
+{
+    "name": "ingalabs/image-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle for image serving",
+    "keywords": ["symfony-bundle", "bundle", "image"],
+    "homepage": "https://github.com/ingalabs/image-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IngaLabs",
+            "email": "info@ingalabs.hu",
+            "homepage": "https://ingalabs.hu"
+        },
+        {
+            "name": "Antal Áron",
+            "email": "antalaron@antalaron.hu",
+            "homepage": "https://antalaron.hu"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "~2.7|~3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "<6.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IngaLabs\\Bundle\\ImageBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IngaLabs\\Bundle\\ImageBundle\\Tests\\": "tests/Tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

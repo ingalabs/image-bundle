@@ -1,0 +1,3 @@
+services:
+    ingalabs_image.image_controller:
+        class: 'IngaLabs\Bundle\ImageBundle\Controller\ImageController'

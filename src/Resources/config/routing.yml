@@ -1,0 +1,4 @@
+ingalabs_image_image_index:
+    path: /
+    defaults:
+        _controller: antalaron_image.image_controller:indexAction
