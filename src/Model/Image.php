@@ -66,14 +66,14 @@ class Image
     private $createdAt;
 
     /**
-     * @var bool
-     */
-    private $animated = false;
-
-    /**
      * @var \DateTime
      */
     private $lastModifiedAt;
+
+    /**
+     * @var bool
+     */
+    private $animated = false;
 
     /**
      * Get id.
