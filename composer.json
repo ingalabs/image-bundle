@@ -19,7 +19,10 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "symfony/symfony": "~2.7|~3.0"
+        "symfony/symfony": "~2.7|~3.0",
+        "intervention/image": "^2.3",
+        "sybio/gif-frame-extractor": "^1.0",
+        "sybio/gif-creator": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "<6.0.0"
