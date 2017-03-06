@@ -29,7 +29,18 @@ class IngaLabsImageExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('ingalabs_image.backend_type_'.$config['doctrine_driver'], true);
+        $container->setParameter('ingalabs_image.config', $config);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'ingalabs_image';
     }
 }
