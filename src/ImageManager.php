@@ -471,6 +471,11 @@ class ImageManager
         }
     }
 
+    public function getImageByHash($hash)
+    {
+        return $this->managerRegistry->getManagerForClass(Image::class)->findOneByHash($hash);
+    }
+
     /**
      * Lazy loads aspects.
      *
