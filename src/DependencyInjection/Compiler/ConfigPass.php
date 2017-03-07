@@ -23,10 +23,18 @@ class ConfigPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
+        if (!$container->hasDefinition('ingalabs_image.image_manager')) {
+            return;
+        }
+
         if ($container->hasParameter('ingalabs_image.backend_type_orm')) {
             $doctrine = 'doctrine';
         } elseif ($container->hasParameter('ingalabs_image.backend_type_mongodb')) {
             $doctrine = 'doctrine_mongodb';
+        } else {
+            throw new \RuntimeException(
+                'Either parameter "ingalabs_image.backend_type_orm" or '.
+                '"ingalabs_image.backend_type_mongodb" should be set.');
         }
 
         $config = [];
