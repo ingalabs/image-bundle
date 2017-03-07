@@ -22,8 +22,8 @@ IngaLabs\Bundle\ImageBundle\Model\Image:
             type: string
             length: 255
         createdAt:
-            type: date
+            type: datetime
         lastModifiedAt:
-            type: date
+            type: datetime
         animated:
             type: boolean

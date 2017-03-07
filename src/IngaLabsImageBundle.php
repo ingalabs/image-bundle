@@ -11,6 +11,8 @@ namespace IngaLabs\Bundle\ImageBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
+use IngaLabs\Bundle\ImageBundle\DependencyInjection\Compiler\ConfigPass;
+use IngaLabs\Bundle\ImageBundle\DependencyInjection\IngaLabsImageExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -41,7 +43,7 @@ class IngaLabsImageBundle extends Bundle
                 DoctrineOrmMappingsPass::createYamlMappingDriver(
                     $mappings,
                     [],
-                    false,
+                    'ingalabs_image.backend_type_orm',
                     $aliases
             ));
         }
@@ -51,9 +53,19 @@ class IngaLabsImageBundle extends Bundle
                 DoctrineMongoDBMappingsPass::createYamlMappingDriver(
                     $mappings,
                     [],
-                    false,
+                    'ingalabs_image.backend_type_mongodb',
                     $aliases
             ));
         }
+
+        $container->addCompilerPass(new ConfigPass());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContainerExtension()
+    {
+        return new IngaLabsImageExtension();
     }
 }

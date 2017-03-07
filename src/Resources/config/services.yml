@@ -1,3 +1,8 @@
 services:
     ingalabs_image.image_controller:
         class: 'IngaLabs\Bundle\ImageBundle\Controller\ImageController'
+        arguments: ['@ingalabs_image.image_manager']
+
+    ingalabs_image.image_manager:
+        class: 'IngaLabs\Bundle\ImageBundle\ImageManager'
+        arguments: [~, []]

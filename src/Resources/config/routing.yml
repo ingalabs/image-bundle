@@ -1,4 +1,4 @@
 ingalabs_image_image_index:
-    path: /
+    path: /{hash}_{size}_{aspect}.{type}
     defaults:
-        _controller: antalaron_image.image_controller:indexAction
+        _controller: ingalabs_image.image_controller:showAction

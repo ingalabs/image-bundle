@@ -9,7 +9,11 @@
 
 namespace IngaLabs\Bundle\ImageBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use IngaLabs\Bundle\ImageBundle\Exception\ImageExceptionInterface;
+use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
+use IngaLabs\Bundle\ImageBundle\ImageManager;
+use Intervention\Image\Image as InventionImage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * ImageController.
@@ -19,14 +23,36 @@ use Symfony\Component\HttpFoundation\Response;
 class ImageController
 {
     /**
-     * IndexAction.
+     * @var ImageManager
+     */
+    private $imageManager;
+
+    /**
+     * Constructor.
+     *
+     * @param ImageManager $imageManager
+     */
+    public function __construct(ImageManager $imageManager)
+    {
+        $this->imageManager = $imageManager;
+    }
+
+    /**
+     * ShowAction.
      *
      * The main controller.
      *
      * @return Response
      */
-    public function indexAction()
+    public function showAction($hash, $size, $aspect)
     {
-        return new Response('Ok');
+        try {
+            $image = $this->imageManager->getImageByHash($hash);
+            $image = $this->imageManager->generate($image, $size, $aspect);
+        } catch (ImageExceptionInterface $e) {
+            throw new NotFoundHttpException(sprintf('Not found: %s', $e->getMessage()), $e);
+        }
+
+        return $this->imageManager->createResponse($image);
     }
 }
