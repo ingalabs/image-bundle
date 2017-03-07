@@ -10,7 +10,12 @@
 namespace IngaLabs\Bundle\ImageBundle;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use GifCreator\GifCreator;
+use GifFrameExtractor\GifFrameExtractor;
 use GuzzleHttp\Client;
+use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
+use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
+use IngaLabs\Bundle\ImageBundle\Exception\IOException;
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
@@ -55,6 +60,14 @@ class ImageManager
      */
     private $client;
 
+    /**
+     * Constructor.
+     *
+     * @param ObjectManager $objectManager
+     * @param array         $options
+     *
+     * @throws InvalidArgumentException
+     */
     public function __construct(ObjectManager $objectManager, array $options = [])
     {
         $this->objectManager = $objectManager;
@@ -84,7 +97,7 @@ class ImageManager
         return sprintf('%s/%s', $dn['directory'], $dn['name']);
     }
 
-    public function getDirectoryAndNameFor(Image $image, $size = 'or', $aspect = 'or')
+    private function getDirectoryAndNameFor(Image $image, $size = 'or', $aspect = 'or')
     {
         $name = $image->getHash();
 
@@ -127,7 +140,7 @@ class ImageManager
         $isMock = false;
         if (!file_exists($originalFilename)) {
             if (true !== $this->options['mock_image']) {
-                throw new \Exception(sprintf('Image "%s" doesn\'t exists.', $originalFilename));
+                throw new ImageNotFoundException(sprintf('Image "%s" doesn\'t exists.', $originalFilename));
             } elseif (false === $fileExists) {
                 $originalFilename = __DIR__.'/Resources/images/blank'.($image->isAnimated() ? '_animated' : '').'.'.strtolower($image->getType());
 
@@ -182,7 +195,7 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->managerRegistry->getManagerForClass(Image::class);
+            $em = $this->objectManager->getManagerForClass(Image::class);
 
             $em->persist($image);
             $em->flush();
@@ -228,7 +241,7 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->managerRegistry->getManagerForClass(Image::class);
+            $em = $this->objectManager->getManagerForClass(Image::class);
 
             $em->persist($image);
             $em->flush();
@@ -237,7 +250,7 @@ class ImageManager
         return $image;
     }
 
-    public function cloneImage(Image $originalImage)
+    public function cloneImage(Image $originalImage, $flush = false)
     {
         $image = clone $originalImage;
 
@@ -251,6 +264,13 @@ class ImageManager
         }
 
         copy($oldFilename, $newFilename);
+
+        if ($flush) {
+            $em = $this->objectManager->getManagerForClass(Image::class);
+
+            $em->persist($image);
+            $em->flush();
+        }
 
         return $image;
     }
@@ -317,7 +337,7 @@ class ImageManager
 
             if (!$isMock) {
                 if (false === @file_put_contents($newFilename, $gc->getGif())) {
-                    throw new \Exception(sprintf('Cannot write %s', $newFilename));
+                    throw new IOException(sprintf('Cannot write %s', $newFilename));
                 }
             } else {
                 return ['content' => $gc->getGif()];
@@ -363,7 +383,7 @@ class ImageManager
             $gc->create($images, $durations, 0);
 
             if (false === @file_put_contents($originalFilename, $gc->getGif())) {
-                throw new \Exception(sprintf('Cannot write %s', $originalFilename));
+                throw new IOException(sprintf('Cannot write %s', $originalFilename));
             }
 
             $image
@@ -398,6 +418,10 @@ class ImageManager
 
     public function rotate(Image $image, $direction = 'right')
     {
+        if (!in_array($direction, ['left', 'right'], true)) {
+            throw new InvalidArgumentException(sprintf('Argument 2 of %s has to be either left or right. "%s" given.', __METHOD__, $direction));
+        }
+
         $originalFilename = $this->options['image_dir'].$this->getUrlFor($image);
 
         if ($image->isAnimated()) {
@@ -423,7 +447,7 @@ class ImageManager
             $gc->create($images, $durations, 0);
 
             if (false === @file_put_contents($originalFilename, $gc->getGif())) {
-                throw new \Exception(sprintf('Cannot write %s', $originalFilename));
+                throw new IOException(sprintf('Cannot write %s', $originalFilename));
             }
 
             $this->delete($image, true, false);
@@ -464,7 +488,7 @@ class ImageManager
         }
 
         if (!$keepOriginal && $purge) {
-            $em = $this->managerRegistry->getManagerForClass(Image::class);
+            $em = $this->objectManager->getManagerForClass(Image::class);
 
             $em->remove($image);
             $em->flush();
@@ -473,7 +497,7 @@ class ImageManager
 
     public function getImageByHash($hash)
     {
-        return $this->managerRegistry->getManagerForClass(Image::class)->findOneByHash($hash);
+        return $this->objectManager->getManagerForClass(Image::class)->findOneByHash($hash);
     }
 
     /**
