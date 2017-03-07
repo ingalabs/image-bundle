@@ -16,6 +16,7 @@ use GuzzleHttp\Client;
 use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
 use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
 use IngaLabs\Bundle\ImageBundle\Exception\IOException;
+use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
@@ -158,7 +159,7 @@ class ImageManager
 
         $img = $this->resize($img, $image, $originalFilename, $newFilename, $size, $aspect, $isMock);
 
-        return (!is_array($img)) && (!$img instanceof InventionImage) ? $newFilename : $img;
+        return $img instanceof InventionImage || $img instanceof GifImage ? $img : $newFilename;
     }
 
     public function handleUpload(UploadedFile $file, $flush = false)
@@ -340,7 +341,7 @@ class ImageManager
                     throw new IOException(sprintf('Cannot write %s', $newFilename));
                 }
             } else {
-                return ['content' => $gc->getGif()];
+                return new GifImage($gc->getGif());
             }
         } else {
             $image = $image->crop((int) $width, (int) $height, (int) $x, (int) $y);

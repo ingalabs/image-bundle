@@ -9,6 +9,7 @@
 
 namespace IngaLabs\Bundle\ImageBundle\Controller;
 
+use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use Intervention\Image\Image as InventionImage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -54,17 +55,9 @@ class ImageController
             throw new NotFoundHttpException('Not found: '.$e->getMessage(), $e);
         }
 
-        if ($image instanceof InventionImage) {
+        if ($image instanceof InventionImage || $image instanceof GifImage) {
             $response = new Response($image, Response::HTTP_OK, [
                 'Content-Type' => $image->mime(),
-            ]);
-
-            return $response;
-        }
-
-        if (is_array($image) && array_key_exists('content', $image)) {
-            $response = new Response($image['content'], Response::HTTP_OK, [
-                'Content-Type' => 'image/gif',
             ]);
 
             return $response;
