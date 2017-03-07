@@ -12,7 +12,6 @@ namespace IngaLabs\Bundle\ImageBundle;
 use Doctrine\Common\Persistence\ObjectManager;
 use GifCreator\GifCreator;
 use GifFrameExtractor\GifFrameExtractor;
-use GuzzleHttp\Client;
 use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
 use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
 use IngaLabs\Bundle\ImageBundle\Exception\IOException;
@@ -55,11 +54,6 @@ class ImageManager
      * @var null|Size[]
      */
     private $sizes;
-
-    /**
-     * @var null|Client
-     */
-    private $client;
 
     /**
      * Constructor.
@@ -648,19 +642,5 @@ class ImageManager
         }
 
         return $this->sizes;
-    }
-
-    /**
-     * Lazy loads Client.
-     *
-     * @return Client
-     */
-    private function getClient()
-    {
-        if (null === $this->client) {
-            $this->client = new Client();
-        }
-
-        return $this->client;
     }
 }
