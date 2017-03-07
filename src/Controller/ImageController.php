@@ -9,11 +9,10 @@
 
 namespace IngaLabs\Bundle\ImageBundle\Controller;
 
+use IngaLabs\Bundle\ImageBundle\Exception\ImageExceptionInterface;
 use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use Intervention\Image\Image as InventionImage;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -51,18 +50,10 @@ class ImageController
 
         try {
             $image = $this->imageManager->generate($image, $size, $aspect);
-        } catch (\Exception $e) {
-            throw new NotFoundHttpException('Not found: '.$e->getMessage(), $e);
+        } catch (ImageExceptionInterface $e) {
+            throw new NotFoundHttpException(sprintf('Not found: %s', $e->getMessage()), $e);
         }
 
-        if ($image instanceof InventionImage || $image instanceof GifImage) {
-            $response = new Response($image, Response::HTTP_OK, [
-                'Content-Type' => $image->mime(),
-            ]);
-
-            return $response;
-        }
-
-        return new BinaryFileResponse($image);
+        return $this->imageManager->createResponse($image);
     }
 }

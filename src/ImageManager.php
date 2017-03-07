@@ -20,8 +20,10 @@ use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
 use Intervention\Image\ImageManager as InventionManager;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ImageManager.
@@ -128,6 +130,26 @@ class ImageManager
                 $image->getType()
             ),
         ];
+    }
+
+    /**
+     * Create response.
+     *
+     * @param InventionImage|GifImage|strng $image
+     *
+     * @return Response
+     */
+    public function createResponse($image)
+    {
+        if ($image instanceof InventionImage || $image instanceof GifImage) {
+            $response = new Response($image, Response::HTTP_OK, [
+                'Content-Type' => $image->mime(),
+            ]);
+
+            return $response;
+        }
+
+        return new BinaryFileResponse($image);
     }
 
     /**
