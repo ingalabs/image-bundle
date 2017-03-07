@@ -1,4 +1,0 @@
-ingalabs_image_image_index:
-    path: /{hash}_{size}_{aspect}.{type}
-    defaults:
-        _controller: ingalabs_image.image_controller:showAction

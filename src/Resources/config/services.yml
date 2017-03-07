@@ -6,3 +6,9 @@ services:
     ingalabs_image.image_manager:
         class: 'IngaLabs\Bundle\ImageBundle\ImageManager'
         arguments: [~, []]
+
+    ingalabs_image.routing_loader:
+        class: 'IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader'
+        arguments: [[]]
+        tags:
+            - { name: routing.loader }

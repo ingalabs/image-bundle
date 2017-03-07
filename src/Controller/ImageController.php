@@ -10,9 +10,7 @@
 namespace IngaLabs\Bundle\ImageBundle\Controller;
 
 use IngaLabs\Bundle\ImageBundle\Exception\ImageExceptionInterface;
-use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
-use Intervention\Image\Image as InventionImage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

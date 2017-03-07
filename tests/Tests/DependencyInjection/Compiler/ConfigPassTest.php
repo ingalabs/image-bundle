@@ -11,6 +11,7 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\DependencyInjection\Compiler;
 
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\Compiler\ConfigPass;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
+use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -81,6 +82,12 @@ class ConfigPassTest extends AbstractCompilerPassTestCase
             1,
             $config
         );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'ingalabs_image.routing_loader',
+            0,
+            $config
+        );
     }
 
     protected function setUpContainer($parameters = [])
@@ -97,6 +104,9 @@ class ConfigPassTest extends AbstractCompilerPassTestCase
 
         $imageManagerService = new Definition(ImageManager::class, [null, []]);
         $this->setDefinition('ingalabs_image.image_manager', $imageManagerService);
+
+        $routingLoaderService = new Definition(ImageLoader::class, [[]]);
+        $this->setDefinition('ingalabs_image.routing_loader', $routingLoaderService);
 
         return $imageManagerService;
     }

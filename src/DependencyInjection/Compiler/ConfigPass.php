@@ -23,7 +23,9 @@ class ConfigPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('ingalabs_image.image_manager')) {
+        if (!$container->hasDefinition('ingalabs_image.image_manager')
+            || !$container->hasDefinition('ingalabs_image.routing_loader')
+        ) {
             return;
         }
 
@@ -45,7 +47,10 @@ class ConfigPass implements CompilerPassInterface
         $container
             ->findDefinition('ingalabs_image.image_manager')
             ->replaceArgument(0, new Reference($doctrine, ContainerInterface::NULL_ON_INVALID_REFERENCE))
-            ->replaceArgument(1, $config)
-        ;
+            ->replaceArgument(1, $config);
+
+        $container
+            ->findDefinition('ingalabs_image.routing_loader')
+            ->replaceArgument(0, $config);
     }
 }
