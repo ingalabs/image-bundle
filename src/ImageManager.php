@@ -9,7 +9,7 @@
 
 namespace IngaLabs\Bundle\ImageBundle;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use GifCreator\GifCreator;
 use GifFrameExtractor\GifFrameExtractor;
 use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
@@ -33,9 +33,9 @@ use Symfony\Component\HttpFoundation\Response;
 class ImageManager
 {
     /**
-     * @var ObjectManager
+     * @var ManagerRegistry
      */
-    private $objectManager;
+    private $managerRegistry;
 
     /**
      * @var array
@@ -58,17 +58,22 @@ class ImageManager
     private $sizes;
 
     /**
+     * @var InventionManager
+     */
+    private $imageManager;
+
+    /**
      * Constructor.
      *
-     * @param ObjectManager $objectManager
-     * @param array         $options
+     * @param ManagerRegistry $managerRegistry
+     * @param array           $options
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(ObjectManager $objectManager, array $options = [])
+    public function __construct(ManagerRegistry $managerRegistry, array $options = [])
     {
-        $this->objectManager = $objectManager;
-        $this->options = array_merge($this->options, $options);
+        $this->managerRegistry = $managerRegistry;
+        $this->options = array_merge($this->options, array_intersect_key($options, $this->options));
         $this->imageManager = new InventionManager([
             'driver' => $this->options['driver'],
         ]);
@@ -251,7 +256,7 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->objectManager->getManagerForClass(Image::class);
+            $em = $this->managerRegistry->getRepository(Image::class);
 
             $em->persist($image);
             $em->flush();
@@ -305,7 +310,7 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->objectManager->getManagerForClass(Image::class);
+            $em = $this->managerRegistry->getRepository(Image::class);
 
             $em->persist($image);
             $em->flush();
@@ -338,7 +343,7 @@ class ImageManager
         copy($oldFilename, $newFilename);
 
         if ($flush) {
-            $em = $this->objectManager->getManagerForClass(Image::class);
+            $em = $this->managerRegistry->getRepository(Image::class);
 
             $em->persist($image);
             $em->flush();
@@ -609,7 +614,7 @@ class ImageManager
         }
 
         if (!$keepOriginal && $purge) {
-            $em = $this->objectManager->getManagerForClass(Image::class);
+            $em = $this->managerRegistry->getRepository(Image::class);
 
             $em->remove($image);
             $em->flush();
@@ -627,7 +632,13 @@ class ImageManager
      */
     public function getImageByHash($hash)
     {
-        return $this->objectManager->getManagerForClass(Image::class)->findOneByHash($hash);
+        $image = $this->managerRegistry->getRepository(Image::class)->findOneByHash($hash);
+
+        if (null === $image) {
+            throw new ImageNotFoundException(sprintf('Image with hash "%s" not found.', $hash));
+        }
+
+        return $image;
     }
 
     /**
@@ -638,7 +649,7 @@ class ImageManager
     private function getAspects()
     {
         if (null === $this->aspects) {
-            $aspects = $this->objectManager->getRepository(Aspect::class)->findAll();
+            $aspects = $this->managerRegistry->getRepository(Aspect::class)->findAll();
 
             foreach ($aspects as $aspect) {
                 $this->aspects[$aspect->getShortName()] = null === $aspect->getHeight() ? null : $aspect->getWidth() / $aspect->getHeight();
@@ -656,7 +667,7 @@ class ImageManager
     private function getSizes()
     {
         if (null === $this->sizes) {
-            $sizes = $this->objectManager->getRepository(Size::class)->findAll();
+            $sizes = $this->managerRegistry->getRepository(Size::class)->findAll();
 
             foreach ($sizes as $size) {
                 $this->sizes[$size->getShortName()] = $size->getMaxSize();

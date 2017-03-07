@@ -46,9 +46,8 @@ class ImageController
      */
     public function showAction($hash, $size, $aspect)
     {
-        $image = $this->imageManager->getImageByHash($hash);
-
         try {
+            $image = $this->imageManager->getImageByHash($hash);
             $image = $this->imageManager->generate($image, $size, $aspect);
         } catch (ImageExceptionInterface $e) {
             throw new NotFoundHttpException(sprintf('Not found: %s', $e->getMessage()), $e);
