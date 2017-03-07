@@ -82,6 +82,16 @@ class ImageManager
         }
     }
 
+    /**
+     * Get URL for image.
+     *
+     * @param Image  $image
+     * @param string $size
+     * @param string $aspect
+     * @param bool   $showLastModifiedAt
+     *
+     * @return string
+     */
     public function getUrlFor(Image $image, $size = 'or', $aspect = 'or', $showLastModifiedAt = false)
     {
         $dn = $this->getDirectoryAndNameFor($image, $size, $aspect);
@@ -98,6 +108,15 @@ class ImageManager
         return sprintf('%s/%s', $dn['directory'], $dn['name']);
     }
 
+    /**
+     * Get directory and name for image.
+     *
+     * @param Image  $image
+     * @param string $size
+     * @param string $aspect
+     *
+     * @return array With key direcotry and name
+     */
     private function getDirectoryAndNameFor(Image $image, $size = 'or', $aspect = 'or')
     {
         $name = $image->getHash();
@@ -117,6 +136,18 @@ class ImageManager
         ];
     }
 
+    /**
+     * Main entrypoint.
+     *
+     * @param Image  $image
+     * @param string $size
+     * @param string $aspect
+     *
+     * @return InventionImage|GifImage|string
+     *
+     * @throws InvalidArgumentException
+     * @throws ImageNotFoundException
+     */
     public function generate(Image $image, $size, $aspect)
     {
         if (!array_key_exists($aspect, $this->getAspects())) {
@@ -162,6 +193,14 @@ class ImageManager
         return $img instanceof InventionImage || $img instanceof GifImage ? $img : $newFilename;
     }
 
+    /**
+     * Handles an uploaded file.
+     *
+     * @param UploadedFile $file
+     * @param bool         $flush
+     *
+     * @return Image
+     */
     public function handleUpload(UploadedFile $file, $flush = false)
     {
         $image = new Image();
@@ -205,6 +244,14 @@ class ImageManager
         return $image;
     }
 
+    /**
+     * Handle an upload from server.
+     *
+     * @param File $file
+     * @param bool $flush
+     *
+     * @return Image
+     */
     public function handleCopy(File $file, $flush = false)
     {
         $image = new Image();
@@ -251,6 +298,14 @@ class ImageManager
         return $image;
     }
 
+    /**
+     * Clones an image.
+     *
+     * @param Image $originalImage
+     * @param bool  $flush
+     *
+     * @return Image
+     */
     public function cloneImage(Image $originalImage, $flush = false)
     {
         $image = clone $originalImage;
@@ -276,6 +331,21 @@ class ImageManager
         return $image;
     }
 
+    /**
+     * Resize image.
+     *
+     * @param InventionImage $image
+     * @param Image          $originalImage
+     * @param string         $originalFilename
+     * @param string         $newFilename
+     * @param string         $size
+     * @param string         $aspectString
+     * @param bool           $isMock
+     *
+     * @return InventionImage|GifImage|string
+     *
+     * @throws IOException
+     */
     private function resize(InventionImage $image, Image $originalImage, $originalFilename, $newFilename, $size, $aspectString, $isMock = false)
     {
         $origWidth = $image->getWidth();
@@ -357,6 +427,20 @@ class ImageManager
         return $newFilename;
     }
 
+    /**
+     * Crom an image.
+     *
+     * @param Image $image
+     * @param int   $x
+     * @param int   $y
+     * @param int   $width
+     * @param int   $height
+     * @param bool  $greyscale
+     *
+     * @return string
+     *
+     * @throws IOException
+     */
     public function cropImage(Image $image, $x, $y, $width, $height, $greyscale = false)
     {
         $originalFilename = $this->options['image_dir'].$this->getUrlFor($image);
@@ -417,6 +501,17 @@ class ImageManager
         return $originalFilename;
     }
 
+    /**
+     * Rotate image.
+     *
+     * @param Image  $image
+     * @param string $direction left or right
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException
+     * @throws IOException
+     */
     public function rotate(Image $image, $direction = 'right')
     {
         if (!in_array($direction, ['left', 'right'], true)) {
@@ -477,6 +572,15 @@ class ImageManager
         return $this;
     }
 
+    /**
+     * Delete an image.
+     *
+     * @param Image $image
+     * @param bool  $keepOriginal
+     * @param bool  $purge
+     *
+     * @return $this
+     */
     public function delete(Image $image, $keepOriginal = false, $purge = true)
     {
         // delete files
@@ -494,8 +598,17 @@ class ImageManager
             $em->remove($image);
             $em->flush();
         }
+
+        return $this;
     }
 
+    /**
+     * Get image by hash.
+     *
+     * @param string $hash
+     *
+     * @return Image|null
+     */
     public function getImageByHash($hash)
     {
         return $this->objectManager->getManagerForClass(Image::class)->findOneByHash($hash);
