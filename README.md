@@ -1,6 +1,8 @@
 Image bundle
 ============
 
+[![Build Status](https://travis-ci.org/ingalabs/image-bundle.svg?branch=master)](https://travis-ci.org/ingalabs/image-bundle) [![Coverage Status](https://coveralls.io/repos/github/ingalabs/image-bundle/badge.svg)](https://coveralls.io/github/ingalabs/image-bundle) [![Latest Stable Version](https://poser.pugx.org/ingalabs/image-bundle/v/stable)](https://packagist.org/packages/ingalabs/image-bundle) [![Latest Unstable Version](https://poser.pugx.org/ingalabs/image-bundle/v/unstable)](https://packagist.org/packages/ingalabs/image-bundle) [![License](https://poser.pugx.org/ingalabs/image-bundle/license)](https://packagist.org/packages/ingalabs/image-bundle)
+
 Image serving bundle.
 
 Installation
