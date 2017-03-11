@@ -20,6 +20,8 @@ use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
 use Intervention\Image\ImageManager as InventionManager;
+use Symfony\Component\Filesystem\Exception\IOException as FilesystemIOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -32,6 +34,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ImageManager
 {
+    const DEFAULT_QUALITY = 90;
+
     /**
      * @var ManagerRegistry
      */
@@ -58,6 +62,11 @@ class ImageManager
     private $sizes;
 
     /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
      * @var InventionManager
      */
     private $imageManager;
@@ -81,6 +90,7 @@ class ImageManager
         if ('gd' !== $this->options['driver']) {
             throw new InvalidArgumentException(sprintf('Only driver "gd" is supported. "%s" given.', $this->options['driver']));
         }
+        $this->filesystem = new Filesystem();
     }
 
     /**
@@ -191,7 +201,7 @@ class ImageManager
         $newFilename = $this->options['image_dir'].$this->getUrlFor($image, $size, $aspect);
 
         $isMock = false;
-        if (!file_exists($originalFilename)) {
+        if (!$this->filesystem->exists($originalFilename)) {
             if (true !== $this->options['mock_image']) {
                 throw new ImageNotFoundException(sprintf('Image "%s" doesn\'t exists.', $originalFilename));
             } elseif (false === $fileExists) {
@@ -201,8 +211,8 @@ class ImageManager
             }
         }
 
-        if (!file_exists(dirname($newFilename))) {
-            mkdir(dirname($newFilename), 0755, true);
+        if (!$this->filesystem->exists(dirname($newFilename))) {
+            $this->filesystem->mkdir(dirname($newFilename), 0755, true);
         }
 
         $img = $this->imageManager
@@ -246,7 +256,7 @@ class ImageManager
         if (null !== $orientation && 1 !== $orientation) {
             $img = $img
                 ->orientate()
-                ->save($this->options['image_dir'].$this->getUrlFor($image), 90);
+                ->save($this->options['image_dir'].$this->getUrlFor($image), self::DEFAULT_QUALITY);
         }
 
         $image->setHeight($img->height());
@@ -336,11 +346,7 @@ class ImageManager
 
         $oldFilename = $this->options['image_dir'].$this->getUrlFor($originalImage);
         $newFilename = $this->options['image_dir'].$this->getUrlFor($image);
-        if (!file_exists(dirname($newFilename))) {
-            mkdir(dirname($newFilename), 0755, true);
-        }
-
-        copy($oldFilename, $newFilename);
+        $this->filesystem->copy($oldFilename, $newFilename);
 
         if ($flush) {
             $em = $this->managerRegistry->getRepository(Image::class);
@@ -428,9 +434,7 @@ class ImageManager
             $gc->create($images, $durations, 0);
 
             if (!$isMock) {
-                if (false === @file_put_contents($newFilename, $gc->getGif())) {
-                    throw new IOException(sprintf('Cannot write %s', $newFilename));
-                }
+                $this->filesystem->dumpFile($newFilename, $gc->getGif());
             } else {
                 return new GifImage($gc->getGif());
             }
@@ -488,9 +492,7 @@ class ImageManager
             $gc = new GifCreator();
             $gc->create($images, $durations, 0);
 
-            if (false === @file_put_contents($originalFilename, $gc->getGif())) {
-                throw new IOException(sprintf('Cannot write %s', $originalFilename));
-            }
+            $this->filesystem->dumpFile($originalFilename, $gc->getGif());
 
             $image
                 ->setWidth((int) $width)
@@ -563,9 +565,7 @@ class ImageManager
             $gc = new GifCreator();
             $gc->create($images, $durations, 0);
 
-            if (false === @file_put_contents($originalFilename, $gc->getGif())) {
-                throw new IOException(sprintf('Cannot write %s', $originalFilename));
-            }
+            $this->filesystem->dumpFile($originalFilename, $gc->getGif());
 
             $this->delete($image, true, false);
         } else {
@@ -608,7 +608,11 @@ class ImageManager
         foreach ($this->getSizes() as $size => $sizeVal) {
             foreach ($this->getAspects() as $aspect => $aspectVal) {
                 if (!$keepOriginal || 'or' !== $size || 'or' !== $aspect) {
-                    @unlink($this->options['image_dir'].$this->getUrlFor($image, $size, $aspect));
+                    try {
+                        $this->filesystem->remove($this->options['image_dir'].$this->getUrlFor($image, $size, $aspect));
+                    } catch (FilesystemIOException $e) {
+                        // Do nothing
+                    }
                 }
             }
         }
