@@ -83,13 +83,13 @@ class ImageManager
     {
         $this->managerRegistry = $managerRegistry;
         $this->options = array_merge($this->options, array_intersect_key($options, $this->options));
-        $this->imageManager = new InventionManager([
-            'driver' => $this->options['driver'],
-        ]);
-
         if ('gd' !== $this->options['driver']) {
             throw new InvalidArgumentException(sprintf('Only driver "gd" is supported. "%s" given.', $this->options['driver']));
         }
+
+        $this->imageManager = new InventionManager([
+            'driver' => $this->options['driver'],
+        ]);
         $this->filesystem = new Filesystem();
     }
 
@@ -107,7 +107,7 @@ class ImageManager
     {
         $dn = $this->getDirectoryAndNameFor($image, $size, $aspect);
 
-        if ($showLastModified) {
+        if ($showLastModifiedAt) {
             $timestamp = '0';
             if (null !== $image->getLastModifiedAt()) {
                 $timestamp = $image->getLastModifiedAt()->getTimestamp();
@@ -136,7 +136,7 @@ class ImageManager
             'directory' => sprintf('%s/%s/%s',
                 $this->options['prefix'],
                 substr($name, 0, 2),
-                substr($name, 0, 16)
+                substr($name, 0, 8)
             ),
             'name' => sprintf('%s_%s_%s.%s',
                 $name,
@@ -636,7 +636,7 @@ class ImageManager
      */
     public function getImageByHash($hash)
     {
-        $image = $this->managerRegistry->getRepository(Image::class)->findOneByHash($hash);
+        $image = $this->managerRegistry->getRepository(Image::class)->findOneBy(['hash' => $hash]);
 
         if (null === $image) {
             throw new ImageNotFoundException(sprintf('Image with hash "%s" not found.', $hash));
