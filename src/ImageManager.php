@@ -636,7 +636,7 @@ class ImageManager
      */
     public function getImageByHash($hash)
     {
-        $image = $this->managerRegistry->getRepository(Image::class)->findOneBy(['hash' => $hash]);
+        $image = $this->managerRegistry->getRepository(Image::class)->findOneByHash($hash);
 
         if (null === $image) {
             throw new ImageNotFoundException(sprintf('Image with hash "%s" not found.', $hash));

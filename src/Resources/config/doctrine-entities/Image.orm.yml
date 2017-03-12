@@ -1,6 +1,6 @@
 IngaLabs\Bundle\ImageBundle\Model\Image:
     type: entity
-    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\Doctrine\ImageRepository'
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\ORM\ImageRepository'
     id:
         id:
             type: integer

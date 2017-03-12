@@ -10,13 +10,15 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectRepository;
 use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
 use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
+use IngaLabs\Bundle\ImageBundle\Repository\AspectRepositoryInterface;
+use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryInterface;
+use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
 
 /**
  * ImageManagerTest.
@@ -56,7 +58,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetUrlFor()
     {
-        $date = new \DateTime('1986-07-23 23:40:40');
+        $date = new \DateTime('1986-07-23 23:40:40', new \DateTimeZone('Europe/Budapest'));
         $image = new Image();
         $image
             ->setHash('01234567890123456789012345678901')
@@ -73,7 +75,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($url, '/images/01/01234567/01234567890123456789012345678901_sm_1x1.jpg');
 
         $url = $imageManager->getUrlFor($image, 'sm', '1x1', true);
-        $this->assertSame($url, '/images/01/01234567/01234567890123456789012345678901_sm_1x1.jpg?timestamp='.$date->getTimestamp());
+        $this->assertSame($url, '/images/01/01234567/01234567890123456789012345678901_sm_1x1.jpg?timestamp=522538840');
     }
 
     public function testGetImageByHash()
@@ -98,6 +100,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
         $datas = [
             ['or', null, null],
             ['1x1', 1, 1],
+            ['16x9', 16, 9],
         ];
 
         $aspects = [];
@@ -122,6 +125,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($aspects['or']);
         $this->assertSame($aspects['1x1'], 1);
+        $this->assertSame($aspects['16x9'], 16 / 9);
     }
 
     public function testGetSizes()
@@ -164,7 +168,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
         $imagesByHash = [];
         foreach ($imagesArray as $image) {
             if ($image instanceof Image) {
-                $imagesByHash[$image->getHash()] = $image;
+                $imagesByHash[] = [$image->getHash(), $image];
             }
         }
 
@@ -179,22 +183,18 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
         }
 
         $imageRepository = $this
-            ->getMockBuilder(ObjectRepository::class)
+            ->getMockBuilder(ImageRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $imageRepository
             ->method('find')
             ->will($this->returnValueMap($images));
         $imageRepository
-            ->method('findOneBy')
-            ->will($this->returnCallback(function ($arg) use ($imagesByHash) {
-                $hash = is_array($arg) && array_key_exists('hash', $arg) ? $arg['hash'] : null;
-
-                return null === $hash || !array_key_exists($hash, $imagesByHash) ? null : $imagesByHash[$hash];
-            }));
+            ->method('findOneByHash')
+            ->will($this->returnValueMap($imagesByHash));
 
         $aspectRepository = $this
-            ->getMockBuilder(ObjectRepository::class)
+            ->getMockBuilder(AspectRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $aspectRepository
@@ -205,7 +205,7 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($aspectsArray));
 
         $sizeRepository = $this
-            ->getMockBuilder(ObjectRepository::class)
+            ->getMockBuilder(SizeRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $sizeRepository

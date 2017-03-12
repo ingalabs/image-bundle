@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace IngaLabs\Bundle\ImageBundle\Repository\MongoDB;
+namespace IngaLabs\Bundle\ImageBundle\Repository\ORM;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ORM\EntityRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryInterface;
 use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
 
@@ -18,7 +18,7 @@ use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageRepository extends DocumentRepository implements ImageRepositoryInterface
+class ImageRepository extends EntityRepository implements ImageRepositoryInterface
 {
     use ImageRepositoryTrait;
 }

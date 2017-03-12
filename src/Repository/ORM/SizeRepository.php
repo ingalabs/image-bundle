@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace IngaLabs\Bundle\ImageBundle\Repository\MongoDB;
+namespace IngaLabs\Bundle\ImageBundle\Repository\ORM;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ORM\EntityRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
 
 /**
@@ -17,6 +17,6 @@ use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class SizeRepository extends DocumentRepository implements SizeRepositoryInterface
+class SizeRepository extends EntityRepository implements SizeRepositoryInterface
 {
 }

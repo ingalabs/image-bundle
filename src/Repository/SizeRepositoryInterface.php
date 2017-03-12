@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace IngaLabs\Bundle\ImageBundle\Repository\Doctrine;
+namespace IngaLabs\Bundle\ImageBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
- * ImageRepository.
+ * SizeRepositoryInterface.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageRepository extends EntityRepository
+interface SizeRepositoryInterface extends ObjectRepository
 {
 }

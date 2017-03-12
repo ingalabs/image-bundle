@@ -7,15 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace IngaLabs\Bundle\ImageBundle\Repository\Doctrine;
+namespace IngaLabs\Bundle\ImageBundle\Repository\ORM;
 
 use Doctrine\ORM\EntityRepository;
+use IngaLabs\Bundle\ImageBundle\Repository\AspectRepositoryInterface;
 
 /**
- * SizeRepository.
+ * AspectRepository.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class SizeRepository extends EntityRepository
+class AspectRepository extends EntityRepository implements AspectRepositoryInterface
 {
 }
