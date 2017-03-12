@@ -14,11 +14,11 @@ use GifCreator\GifCreator;
 use GifFrameExtractor\GifFrameExtractor;
 use IngaLabs\Bundle\ImageBundle\Exception\ImageNotFoundException;
 use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
-use IngaLabs\Bundle\ImageBundle\Exception\IOException;
 use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Model\Size;
+use Intervention\Image\Image as InventionImage;
 use Intervention\Image\ImageManager as InventionManager;
 use Symfony\Component\Filesystem\Exception\IOException as FilesystemIOException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -150,7 +150,7 @@ class ImageManager
     /**
      * Create response.
      *
-     * @param InventionImage|GifImage|strng $image
+     * @param InventionImage|GifImage|string $image
      *
      * @return Response
      */
@@ -204,15 +204,10 @@ class ImageManager
         if (!$this->filesystem->exists($originalFilename)) {
             if (true !== $this->options['mock_image']) {
                 throw new ImageNotFoundException(sprintf('Image "%s" doesn\'t exists.', $originalFilename));
-            } elseif (false === $fileExists) {
-                $originalFilename = __DIR__.'/Resources/images/blank'.($image->isAnimated() ? '_animated' : '').'.'.strtolower($image->getType());
-
-                $isMock = true;
             }
-        }
 
-        if (!$this->filesystem->exists(dirname($newFilename))) {
-            $this->filesystem->mkdir(dirname($newFilename), 0755, true);
+            $originalFilename = __DIR__.'/Resources/images/blank'.($image->isAnimated() ? '_animated' : '').'.'.strtolower($image->getType());
+            $isMock = true;
         }
 
         $img = $this->imageManager
@@ -266,10 +261,10 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->managerRegistry->getRepository(Image::class);
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
 
-            $em->persist($image);
-            $em->flush();
+            $om->persist($image);
+            $om->flush();
         }
 
         return $image;
@@ -320,10 +315,10 @@ class ImageManager
         $image->setLastModifiedAt(new \DateTime());
 
         if ($flush) {
-            $em = $this->managerRegistry->getRepository(Image::class);
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
 
-            $em->persist($image);
-            $em->flush();
+            $om->persist($image);
+            $om->flush();
         }
 
         return $image;
@@ -349,10 +344,10 @@ class ImageManager
         $this->filesystem->copy($oldFilename, $newFilename);
 
         if ($flush) {
-            $em = $this->managerRegistry->getRepository(Image::class);
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
 
-            $em->persist($image);
-            $em->flush();
+            $om->persist($image);
+            $om->flush();
         }
 
         return $image;
@@ -370,8 +365,6 @@ class ImageManager
      * @param bool           $isMock
      *
      * @return InventionImage|GifImage|string
-     *
-     * @throws IOException
      */
     private function resize(InventionImage $image, Image $originalImage, $originalFilename, $newFilename, $size, $aspectString, $isMock = false)
     {
@@ -461,12 +454,11 @@ class ImageManager
      * @param int   $width
      * @param int   $height
      * @param bool  $greyscale
+     * @param bool  $flush
      *
      * @return string
-     *
-     * @throws IOException
      */
-    public function cropImage(Image $image, $x, $y, $width, $height, $greyscale = false)
+    public function cropImage(Image $image, $x, $y, $width, $height, $greyscale = false, $flush = false)
     {
         $originalFilename = $this->options['image_dir'].$this->getUrlFor($image);
 
@@ -521,6 +513,12 @@ class ImageManager
 
         $image->setLastModifiedAt(new \DateTime());
 
+        if ($flush) {
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
+
+            $om->flush();
+        }
+
         return $originalFilename;
     }
 
@@ -529,13 +527,13 @@ class ImageManager
      *
      * @param Image  $image
      * @param string $direction left or right
+     * @param bool   $flush
      *
-     * @return $this
+     * @return string
      *
      * @throws InvalidArgumentException
-     * @throws IOException
      */
-    public function rotate(Image $image, $direction = 'right')
+    public function rotate(Image $image, $direction = 'right', $flush = false)
     {
         if (!in_array($direction, ['left', 'right'], true)) {
             throw new InvalidArgumentException(sprintf('Argument 2 of %s has to be either left or right. "%s" given.', __METHOD__, $direction));
@@ -590,7 +588,13 @@ class ImageManager
         $image->setWidth($height);
         $image->setLastModifiedAt(new \DateTime());
 
-        return $this;
+        if ($flush) {
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
+
+            $om->flush();
+        }
+
+        return $originalFilename;
     }
 
     /**
@@ -602,7 +606,7 @@ class ImageManager
      *
      * @return $this
      */
-    public function delete(Image $image, $keepOriginal = false, $purge = true)
+    public function delete(Image $image, $keepOriginal = false, $purge = false)
     {
         // delete files
         foreach ($this->getSizes() as $size => $sizeVal) {
@@ -618,10 +622,10 @@ class ImageManager
         }
 
         if (!$keepOriginal && $purge) {
-            $em = $this->managerRegistry->getRepository(Image::class);
+            $om = $this->managerRegistry->getManagerForClass(Image::class);
 
-            $em->remove($image);
-            $em->flush();
+            $om->remove($image);
+            $om->flush();
         }
 
         return $this;

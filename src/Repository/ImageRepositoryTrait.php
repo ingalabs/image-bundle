@@ -32,4 +32,9 @@ trait ImageRepositoryTrait
             'hash' => $hash,
         ]);
     }
+
+    /**
+     * @see ObjectRepository::findOneBy
+     */
+    abstract public function findOneBy(array $criteria);
 }

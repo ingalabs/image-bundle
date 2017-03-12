@@ -19,14 +19,16 @@ env:
 before_script:
     - composer require symfony/symfony:${SYMFONY_VERSION} --prefer-dist --no-interaction --no-progress
     - mkdir -p build/logs
+    - if [ "${TRAVIS_PHP_VERSION}" == '7.1' ] && [ "${SYMFONY_VERSION}" == '3.2.*' ]; then composer require doctrine/orm doctrine/doctrine-bundle doctrine/mongodb-odm-bundle alcaeus/mongo-php-adapter --ignore-platform-reqs --no-interaction --no-progress; fi;
 
 script:
-    - vendor/bin/phpunit -v --coverage-clover build/logs/clover.xml
-    - if [ "${TRAVIS_PHP_VERSION}" != 'hhvm' ] && [ "${TRAVIS_PHP_VERSION}" != 'nightly' ]; then travis_retry wget -q https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar && travis_retry php coveralls.phar -v; fi;
+    - if [ "${TRAVIS_PHP_VERSION}" != '7.1' ] || [ "${SYMFONY_VERSION}" != '3.2.*' ]; then vendor/bin/phpunit -v; fi;
+    - if [ "${TRAVIS_PHP_VERSION}" == '7.1' ] && [ "${SYMFONY_VERSION}" == '3.2.*' ]; then vendor/bin/phpunit -v --coverage-clover build/logs/clover.xml; fi;
+    - if [ "${TRAVIS_PHP_VERSION}" == '7.1' ] && [ "${SYMFONY_VERSION}" == '3.2.*' ]; then travis_retry wget -q https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar && travis_retry php coveralls.phar -v; fi;
 
 notifications:
     email:
-        - antalaron@antalaron.hu
+        - hello@ingalabs.hu
 
 cache:
     directories:

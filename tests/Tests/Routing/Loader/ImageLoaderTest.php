@@ -11,6 +11,7 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\Routing\Loader;
 
 use IngaLabs\Bundle\ImageBundle\Exception\LoaderException;
 use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
+use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
 
 /**
  * ImageLoaderTest.
@@ -19,6 +20,8 @@ use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
  */
 class ImageLoaderTest extends \PHPUnit_Framework_TestCase
 {
+    use ExceptionWrapperTestCaseTrait;
+
     public function testSupports()
     {
         $loader = new ImageLoader();
@@ -59,22 +62,6 @@ class ImageLoaderTest extends \PHPUnit_Framework_TestCase
         ];
         foreach ($reqirements as $param => $requirement) {
             $this->assertSame($requirement, $route->getRequirement($param));
-        }
-    }
-
-    protected function expectExceptionWrapper($exception, $regexp = null)
-    {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($exception);
-            if (null !== $regexp) {
-                $this->expectExceptionMessageRegExp($regexp);
-            }
-        } else {
-            if (null !== $regexp) {
-                $this->setExpectedExceptionRegExp($exception, $regexp);
-            } else {
-                $this->setExpectedException($exception);
-            }
         }
     }
 }
