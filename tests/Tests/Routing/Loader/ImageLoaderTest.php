@@ -11,6 +11,7 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\Routing\Loader;
 
 use IngaLabs\Bundle\ImageBundle\Exception\LoaderException;
 use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
+use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
 
 /**
  * ImageLoaderTest.
@@ -19,6 +20,8 @@ use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
  */
 class ImageLoaderTest extends \PHPUnit_Framework_TestCase
 {
+    use ExceptionWrapperTestCaseTrait;
+
     public function testSupports()
     {
         $loader = new ImageLoader();
@@ -47,10 +50,11 @@ class ImageLoaderTest extends \PHPUnit_Framework_TestCase
         $route = $routeCollection->get('ingalabs_image_image');
         $this->assertSame(1, $routeCollection->count());
         $this->assertInstanceOf('Symfony\Component\Routing\Route', $route);
-        $this->assertSame($prefix.'/{hash2}/{hash}_{size}_{aspect}.{type}', $route->getPath());
+        $this->assertSame($prefix.'/{hash2}/{hash8}/{hash}_{size}_{aspect}.{type}', $route->getPath());
         $this->assertSame('ingalabs_image.image_controller:showAction', $route->getDefault('_controller'));
         $reqirements = [
             'hash2' => '[a-zA-Z0-9]{2}',
+            'hash8' => '[a-zA-Z0-9]{8}',
             'hash' => '[a-zA-Z0-9]{32}',
             'size' => '[a-zA-Z0-9]+',
             'aspect' => '[a-zA-Z0-9]+',
@@ -58,22 +62,6 @@ class ImageLoaderTest extends \PHPUnit_Framework_TestCase
         ];
         foreach ($reqirements as $param => $requirement) {
             $this->assertSame($requirement, $route->getRequirement($param));
-        }
-    }
-
-    protected function expectExceptionWrapper($exception, $regexp = null)
-    {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($exception);
-            if (null !== $regexp) {
-                $this->expectExceptionMessageRegExp($regexp);
-            }
-        } else {
-            if (null !== $regexp) {
-                $this->setExpectedExceptionRegExp($exception, $regexp);
-            } else {
-                $this->setExpectedException($exception);
-            }
         }
     }
 }

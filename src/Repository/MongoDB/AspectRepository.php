@@ -10,12 +10,13 @@
 namespace IngaLabs\Bundle\ImageBundle\Repository\MongoDB;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use IngaLabs\Bundle\ImageBundle\Repository\AspectRepositoryInterface;
 
 /**
  * AspectRepository.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class AspectRepository extends DocumentRepository
+class AspectRepository extends DocumentRepository implements AspectRepositoryInterface
 {
 }

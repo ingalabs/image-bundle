@@ -1,6 +1,6 @@
 IngaLabs\Bundle\ImageBundle\Model\Size:
     type: entity
-    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\Doctrine\SizeRepository'
+    repositoryClass: 'IngaLabs\Bundle\ImageBundle\Repository\ORM\SizeRepository'
     id:
         id:
             type: integer

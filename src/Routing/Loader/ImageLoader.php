@@ -55,12 +55,13 @@ class ImageLoader extends Loader
         $routes = new RouteCollection();
 
         // prepare a new route
-        $path = rtrim($this->options['prefix'], '/').'/{hash2}/{hash}_{size}_{aspect}.{type}';
+        $path = rtrim($this->options['prefix'], '/').'/{hash2}/{hash8}/{hash}_{size}_{aspect}.{type}';
         $defaults = [
             '_controller' => 'ingalabs_image.image_controller:showAction',
         ];
         $requirements = [
             'hash2' => '[a-zA-Z0-9]{2}',
+            'hash8' => '[a-zA-Z0-9]{8}',
             'hash' => '[a-zA-Z0-9]{32}',
             'size' => '[a-zA-Z0-9]+',
             'aspect' => '[a-zA-Z0-9]+',
