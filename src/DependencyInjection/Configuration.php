@@ -45,6 +45,22 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('mock_image')
                     ->defaultValue('%kernel.debug%')
                 ->end()
+                ->scalarNode('file_levels')
+                    ->defaultValue('2:8')
+                    ->validate()
+                        ->ifTrue(function ($v) {
+                            $n = explode(':', $v);
+                            foreach ($n as $i) {
+                                if ($i !== (string) (int) $i || $i < 1 || $i > 31) {
+                                    return true;
+                                }
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('Correct form: xx or xx:xx or xx:xx:xx or...')
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

@@ -49,6 +49,7 @@ class ImageManager
         'driver' => 'gd',
         'image_dir' => '',
         'mock_image' => false,
+        'file_levels' => '2:8',
     ];
 
     /**
@@ -132,11 +133,16 @@ class ImageManager
     {
         $name = $image->getHash();
 
+        $fileLevels = explode(':', $this->options['file_levels']);
+        $hashs = '';
+        foreach ($fileLevels as $level) {
+            $hashs .= '/'.substr($name, 0, $level);
+        }
+
         return [
-            'directory' => sprintf('%s/%s/%s',
+            'directory' => sprintf('%s%s',
                 $this->options['prefix'],
-                substr($name, 0, 2),
-                substr($name, 0, 8)
+                $hashs
             ),
             'name' => sprintf('%s_%s_%s.%s',
                 $name,

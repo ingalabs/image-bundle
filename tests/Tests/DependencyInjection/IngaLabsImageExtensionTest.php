@@ -36,6 +36,7 @@ class IngaLabsImageExtensionTest extends AbstractExtensionTestCase
             'prefix' => '/assets/images',
             'driver' => 'gd',
             'mock_image' => '%kernel.debug%',
+            'file_levels' => '2:8',
         ];
         $this->assertContainerBuilderHasParameter('ingalabs_image.config', $defaultConfig);
     }

@@ -36,6 +36,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'prefix' => '/assets/images',
                 'driver' => 'gd',
                 'mock_image' => '%kernel.debug%',
+                'file_levels' => '2:8',
             ]
         );
     }
@@ -52,6 +53,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'prefix' => '/assets/images',
                 'driver' => 'gd',
                 'mock_image' => '%kernel.debug%',
+                'file_levels' => '2:8',
             ]
         );
     }
@@ -63,6 +65,56 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 ['doctrine_driver' => 'foo_bar'],
             ],
             'doctrine_driver'
+        );
+    }
+
+    public function testInvalidFileLevels()
+    {
+        $this->assertPartialConfigurationIsInvalid(
+            [
+                ['file_levels' => '2:e:3'],
+            ],
+            'file_levels'
+        );
+        $this->assertPartialConfigurationIsInvalid(
+            [
+                ['file_levels' => ''],
+            ],
+            'file_levels'
+        );
+        $this->assertPartialConfigurationIsInvalid(
+            [
+                ['file_levels' => '::'],
+            ],
+            'file_levels'
+        );
+        $this->assertPartialConfigurationIsInvalid(
+            [
+                ['file_levels' => '1:33'],
+            ],
+            'file_levels'
+        );
+        $this->assertPartialConfigurationIsInvalid(
+            [
+                ['file_levels' => '1:-3'],
+            ],
+            'file_levels'
+        );
+    }
+
+    public function testValidFileLevels()
+    {
+        $this->assertConfigurationIsValid(
+            [
+                ['file_levels' => '2:2:3'],
+            ],
+            'file_levels'
+        );
+        $this->assertConfigurationIsValid(
+            [
+                ['file_levels' => '2'],
+            ],
+            'file_levels'
         );
     }
 }
