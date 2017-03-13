@@ -665,6 +665,7 @@ class ImageManager
         if (null === $this->aspects) {
             $aspects = $this->managerRegistry->getRepository(Aspect::class)->findAll();
 
+            $this->aspects = [];
             foreach ($aspects as $aspect) {
                 $this->aspects[$aspect->getShortName()] = null === $aspect->getHeight() ? null : $aspect->getWidth() / $aspect->getHeight();
             }
@@ -683,6 +684,7 @@ class ImageManager
         if (null === $this->sizes) {
             $sizes = $this->managerRegistry->getRepository(Size::class)->findAll();
 
+            $this->sizes = [];
             foreach ($sizes as $size) {
                 $this->sizes[$size->getShortName()] = $size->getMaxSize();
             }

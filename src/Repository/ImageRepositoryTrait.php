@@ -36,5 +36,5 @@ trait ImageRepositoryTrait
     /**
      * @see ObjectRepository::findOneBy
      */
-    abstract public function findOneBy(array $criteria);
+    abstract public function findOneBy(array $criteria, array $orderBy = null);
 }

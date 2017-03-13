@@ -8,5 +8,7 @@ IngaLabs\Bundle\ImageBundle\Model\Aspect:
             length: 10
         width:
             type: integer
+            nullable: true
         height:
             type: integer
+            nullable: true
