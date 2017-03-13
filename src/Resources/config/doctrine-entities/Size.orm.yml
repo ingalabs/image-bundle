@@ -11,3 +11,4 @@ IngaLabs\Bundle\ImageBundle\Model\Size:
             length: 10
         maxSize:
             type: integer
+            nullable: true
