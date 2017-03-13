@@ -78,6 +78,28 @@ class ImageManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($dn['name'], '01234567890123456789012345678901_sm_1x1.jpg');
     }
 
+    public function testGetDirectoryAndNameForFileLevels()
+    {
+        $image = new Image();
+        $image
+            ->setHash('01234567890123456789012345678901')
+            ->setType('jpg');
+
+        $managerRegistry = $this->getManagerRegistryMock();
+        $imageManager = new ImageManager($managerRegistry, ['prefix' => '/images', 'file_levels' => '4:6:8']);
+
+        $reflector = new \ReflectionClass(ImageManager::class);
+        $method = $reflector->getMethod('getDirectoryAndNameFor');
+        $method->setAccessible(true);
+
+        $dn = $method->invokeArgs($imageManager, [$image]);
+        $this->assertSame($dn['directory'], '/images/0123/012345/01234567');
+        $this->assertSame($dn['name'], '01234567890123456789012345678901_or_or.jpg');
+
+        $dn = $method->invokeArgs($imageManager, [$image, 'sm', '1x1']);
+        $this->assertSame($dn['name'], '01234567890123456789012345678901_sm_1x1.jpg');
+    }
+
     public function testGetUrlFor()
     {
         $date = new \DateTime('1986-07-23 23:40:40', new \DateTimeZone('Europe/Budapest'));

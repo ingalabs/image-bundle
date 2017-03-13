@@ -31,6 +31,7 @@ class ImageLoader extends Loader
      */
     private $options = [
         'prefix' => '/assets/images',
+        'file_levels' => '2:8',
     ];
 
     /**
@@ -55,18 +56,27 @@ class ImageLoader extends Loader
         $routes = new RouteCollection();
 
         // prepare a new route
-        $path = rtrim($this->options['prefix'], '/').'/{hash2}/{hash8}/{hash}_{size}_{aspect}.{type}';
+        $fileLevels = explode(':', $this->options['file_levels']);
+        $hashs = '';
+        foreach ($fileLevels as $key => $level) {
+            $hashs .= '/{hash'.$key.'}';
+        }
+
+        $path = rtrim($this->options['prefix'], '/').$hashs.'/{hash}_{size}_{aspect}.{type}';
         $defaults = [
             '_controller' => 'ingalabs_image.image_controller:showAction',
         ];
         $requirements = [
-            'hash2' => '[a-zA-Z0-9]{2}',
-            'hash8' => '[a-zA-Z0-9]{8}',
             'hash' => '[a-zA-Z0-9]{32}',
             'size' => '[a-zA-Z0-9]+',
             'aspect' => '[a-zA-Z0-9]+',
             'type' => '[a-zA-Z0-9]+',
         ];
+
+        foreach ($fileLevels as $key => $level) {
+            $requirements['hash'.$key] = '[a-zA-Z0-9]{'.$level.'}';
+        }
+
         $route = new Route($path, $defaults, $requirements);
 
         $routeName = 'ingalabs_image_image';

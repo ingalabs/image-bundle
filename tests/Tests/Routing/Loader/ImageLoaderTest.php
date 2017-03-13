@@ -50,11 +50,37 @@ class ImageLoaderTest extends \PHPUnit_Framework_TestCase
         $route = $routeCollection->get('ingalabs_image_image');
         $this->assertSame(1, $routeCollection->count());
         $this->assertInstanceOf('Symfony\Component\Routing\Route', $route);
-        $this->assertSame($prefix.'/{hash2}/{hash8}/{hash}_{size}_{aspect}.{type}', $route->getPath());
+        $this->assertSame($prefix.'/{hash0}/{hash1}/{hash}_{size}_{aspect}.{type}', $route->getPath());
         $this->assertSame('ingalabs_image.image_controller:showAction', $route->getDefault('_controller'));
         $reqirements = [
-            'hash2' => '[a-zA-Z0-9]{2}',
-            'hash8' => '[a-zA-Z0-9]{8}',
+            'hash0' => '[a-zA-Z0-9]{2}',
+            'hash1' => '[a-zA-Z0-9]{8}',
+            'hash' => '[a-zA-Z0-9]{32}',
+            'size' => '[a-zA-Z0-9]+',
+            'aspect' => '[a-zA-Z0-9]+',
+            'type' => '[a-zA-Z0-9]+',
+        ];
+        foreach ($reqirements as $param => $requirement) {
+            $this->assertSame($requirement, $route->getRequirement($param));
+        }
+    }
+
+    public function testLoadFileLevels()
+    {
+        $prefix = '/foo/bar';
+        $loader = new ImageLoader(['prefix' => $prefix, 'file_levels' => '4:6:8']);
+        $routeCollection = $loader->load('.', 'ingalabs_image');
+        $this->assertInstanceOf('Symfony\Component\Routing\RouteCollection', $routeCollection);
+
+        $route = $routeCollection->get('ingalabs_image_image');
+        $this->assertSame(1, $routeCollection->count());
+        $this->assertInstanceOf('Symfony\Component\Routing\Route', $route);
+        $this->assertSame($prefix.'/{hash0}/{hash1}/{hash2}/{hash}_{size}_{aspect}.{type}', $route->getPath());
+        $this->assertSame('ingalabs_image.image_controller:showAction', $route->getDefault('_controller'));
+        $reqirements = [
+            'hash0' => '[a-zA-Z0-9]{4}',
+            'hash1' => '[a-zA-Z0-9]{6}',
+            'hash2' => '[a-zA-Z0-9]{8}',
             'hash' => '[a-zA-Z0-9]{32}',
             'size' => '[a-zA-Z0-9]+',
             'aspect' => '[a-zA-Z0-9]+',
