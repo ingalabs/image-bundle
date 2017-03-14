@@ -9,7 +9,6 @@
 
 namespace IngaLabs\Bundle\ImageBundle\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 
 /**
@@ -32,9 +31,4 @@ trait ImageRepositoryTrait
             'hash' => $hash,
         ]);
     }
-
-    /**
-     * @see ObjectRepository::findOneBy
-     */
-    abstract public function findOneBy(array $criteria, array $orderBy = null);
 }

@@ -9,6 +9,7 @@
 
 namespace IngaLabs\Bundle\ImageBundle\Tests\Repository;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
 
 /**
@@ -20,7 +21,7 @@ class ImageRepositoryTraitTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindOneByHashCallsTheAbstractMethod()
     {
-        $repository = $this->getMockForTrait(ImageRepositoryTrait::class);
+        $repository = $this->getMockForAbstractClass(ObjectRepositoryWithImageRepositoryTraitTestClass::class);
 
         $repository
             ->expects($this->once())
@@ -31,4 +32,9 @@ class ImageRepositoryTraitTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(['hash' => 'foo_bar'], $repository->findOneByHash('foo_bar'));
     }
+}
+
+abstract class ObjectRepositoryWithImageRepositoryTraitTestClass implements ObjectRepository
+{
+    use ImageRepositoryTrait;
 }
