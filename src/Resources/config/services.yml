@@ -12,3 +12,10 @@ services:
         arguments: [[]]
         tags:
             - { name: routing.loader }
+
+    ingalabs_image.twig_extension.image:
+        class: 'IngaLabs\Bundle\ImageBundle\Twig\ImageExtension'
+        arguments: ['@ingalabs_image.image_manager']
+        public: false
+        tags:
+            - { name: twig.extension }

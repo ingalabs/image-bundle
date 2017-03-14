@@ -21,6 +21,7 @@
         "php": ">=5.5.9",
         "symfony/symfony": "~2.7|~3.0",
         "intervention/image": "^2.3",
+        "twig/twig": "^1.28|^2.0",
         "sybio/gif-frame-extractor": "^1.0",
         "sybio/gif-creator": "^1.0"
     },
