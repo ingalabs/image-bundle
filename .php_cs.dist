@@ -23,7 +23,9 @@ return PhpCsFixer\Config::create()
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,
+        'phpdoc_order' => true,
         'psr4' => true,
+        'simplified_null_return' => true,
         'strict_comparison' => true,
         'strict_param' => true,
     ])
