@@ -29,16 +29,6 @@ class ConfigPass implements CompilerPassInterface
             return;
         }
 
-        if ($container->hasParameter('ingalabs_image.backend_type_orm')) {
-            $doctrine = 'doctrine';
-        } elseif ($container->hasParameter('ingalabs_image.backend_type_mongodb')) {
-            $doctrine = 'doctrine_mongodb';
-        } else {
-            throw new \RuntimeException(
-                'Either parameter "ingalabs_image.backend_type_orm" or '.
-                '"ingalabs_image.backend_type_mongodb" should be set.');
-        }
-
         $config = [];
         if ($container->hasParameter('ingalabs_image.config')) {
             $config = $container->getParameter('ingalabs_image.config');
@@ -46,7 +36,7 @@ class ConfigPass implements CompilerPassInterface
 
         $container
             ->findDefinition('ingalabs_image.image_manager')
-            ->replaceArgument(0, new Reference($doctrine, ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->replaceArgument(0, new Reference('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->replaceArgument(1, $config);
 
         $container

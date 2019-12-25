@@ -14,8 +14,6 @@ use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryInterface;
 use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
 
 /**
- * ImageRepository.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageRepository extends EntityRepository implements ImageRepositoryInterface

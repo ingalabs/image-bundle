@@ -10,8 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Exception;
 
 /**
- * InvalidArgumentException.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class InvalidArgumentException extends \InvalidArgumentException implements ImageExceptionInterface

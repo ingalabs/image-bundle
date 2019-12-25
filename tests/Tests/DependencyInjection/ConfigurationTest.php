@@ -11,13 +11,12 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\DependencyInjection;
 
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
- * ConfigurationTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
@@ -31,40 +30,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertProcessedConfigurationEquals(
             [],
             [
-                'doctrine_driver' => 'orm',
                 'image_dir' => '%kernel.root_dir%/../web',
                 'prefix' => '/assets/images',
-                'driver' => 'gd',
                 'mock_image' => '%kernel.debug%',
                 'file_levels' => '2:8',
             ]
-        );
-    }
-
-    public function testMongodbDoctrineDriver()
-    {
-        $this->assertProcessedConfigurationEquals(
-            [
-                ['doctrine_driver' => 'mongodb'],
-            ],
-            [
-                'doctrine_driver' => 'mongodb',
-                'image_dir' => '%kernel.root_dir%/../web',
-                'prefix' => '/assets/images',
-                'driver' => 'gd',
-                'mock_image' => '%kernel.debug%',
-                'file_levels' => '2:8',
-            ]
-        );
-    }
-
-    public function testInvalidDoctrineDriver()
-    {
-        $this->assertPartialConfigurationIsInvalid(
-            [
-                ['doctrine_driver' => 'foo_bar'],
-            ],
-            'doctrine_driver'
         );
     }
 

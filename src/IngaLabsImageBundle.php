@@ -10,7 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Doctrine\ORM\Version;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\Compiler\ConfigPass;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\IngaLabsImageExtension;
@@ -18,15 +17,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * IngaLabsImageBundle.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IngaLabsImageBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -49,22 +43,9 @@ class IngaLabsImageBundle extends Bundle
             ));
         }
 
-        if (class_exists(DoctrineMongoDBMappingsPass::class)) {
-            $container->addCompilerPass(
-                DoctrineMongoDBMappingsPass::createYamlMappingDriver(
-                    $mappings,
-                    [],
-                    'ingalabs_image.backend_type_mongodb',
-                    $aliases
-            ));
-        }
-
         $container->addCompilerPass(new ConfigPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContainerExtension()
     {
         return new IngaLabsImageExtension();

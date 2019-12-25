@@ -10,12 +10,13 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests\Model;
 
 use IngaLabs\Bundle\ImageBundle\Model\Image;
+use PHPUnit\Framework\TestCase;
 
-class ImageTest extends \PHPUnit_Framework_TestCase
+/**
+ * @author Antal Áron <antalaron@antalaron.hu>
+ */
+class ImageTest extends TestCase
 {
-    /**
-     * @var Image
-     */
     protected $object;
 
     protected function setUp()

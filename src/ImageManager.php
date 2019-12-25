@@ -28,22 +28,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * ImageManager.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageManager
 {
     const DEFAULT_QUALITY = 90;
 
-    /**
-     * @var ManagerRegistry
-     */
     private $managerRegistry;
-
-    /**
-     * @var array
-     */
     private $options = [
         'prefix' => '/assets/images',
         'driver' => 'gd',
@@ -51,33 +42,12 @@ class ImageManager
         'mock_image' => false,
         'file_levels' => '2:8',
     ];
-
-    /**
-     * @var null|Aspect[]
-     */
     private $aspects;
-
-    /**
-     * @var null|Size[]
-     */
     private $sizes;
-
-    /**
-     * @var Filesystem
-     */
     private $filesystem;
-
-    /**
-     * @var InventionManager
-     */
     private $imageManager;
 
     /**
-     * Constructor.
-     *
-     * @param ManagerRegistry $managerRegistry
-     * @param array           $options
-     *
      * @throws InvalidArgumentException
      */
     public function __construct(ManagerRegistry $managerRegistry, array $options = [])
@@ -94,17 +64,7 @@ class ImageManager
         $this->filesystem = new Filesystem();
     }
 
-    /**
-     * Get URL for image.
-     *
-     * @param Image  $image
-     * @param string $size
-     * @param string $aspect
-     * @param bool   $showLastModifiedAt
-     *
-     * @return string
-     */
-    public function getUrlFor(Image $image, $size = 'or', $aspect = 'or', $showLastModifiedAt = false)
+    public function getUrlFor(Image $image, string $size = 'or', string $aspect = 'or', bool $showLastModifiedAt = false): string
     {
         $dn = $this->getDirectoryAndNameFor($image, $size, $aspect);
 
@@ -120,16 +80,7 @@ class ImageManager
         return sprintf('%s/%s', $dn['directory'], $dn['name']);
     }
 
-    /**
-     * Get directory and name for image.
-     *
-     * @param Image  $image
-     * @param string $size
-     * @param string $aspect
-     *
-     * @return array With key direcotry and name
-     */
-    private function getDirectoryAndNameFor(Image $image, $size = 'or', $aspect = 'or')
+    private function getDirectoryAndNameFor(Image $image, string $size = 'or', string $aspect = 'or'): array
     {
         $name = $image->getHash();
 
@@ -154,13 +105,9 @@ class ImageManager
     }
 
     /**
-     * Create response.
-     *
      * @param InventionImage|GifImage|string $image
-     *
-     * @return Response
      */
-    public function createResponse($image)
+    public function createResponse($image): Response
     {
         if ($image instanceof InventionImage || $image instanceof GifImage) {
             $response = new Response($image, Response::HTTP_OK, [
@@ -174,33 +121,19 @@ class ImageManager
     }
 
     /**
-     * Main entrypoint.
-     *
-     * @param Image  $image
-     * @param string $size
-     * @param string $aspect
-     *
-     * @return InventionImage|GifImage|string
-     *
      * @throws InvalidArgumentException
      * @throws ImageNotFoundException
+     *
+     * @return InventionImage|GifImage|string
      */
-    public function generate(Image $image, $size, $aspect)
+    public function generate(Image $image, string $size, string $aspect)
     {
-        if (!array_key_exists($aspect, $this->getAspects())) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid aspect. "%s" given. Valid values: %s.',
-                $aspect,
-                implode(', ', array_keys($this->getAspects()))
-            ));
+        if (!\array_key_exists($aspect, $this->getAspects())) {
+            throw new InvalidArgumentException(sprintf('Invalid aspect. "%s" given. Valid values: %s.', $aspect, implode(', ', array_keys($this->getAspects()))));
         }
 
-        if (!array_key_exists($size, $this->getSizes())) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid size. "%s" given. Valid values: %s.',
-                $size,
-                implode(', ', array_keys($this->getSizes()))
-            ));
+        if (!\array_key_exists($size, $this->getSizes())) {
+            throw new InvalidArgumentException(sprintf('Invalid size. "%s" given. Valid values: %s.', $size, implode(', ', array_keys($this->getSizes()))));
         }
 
         $originalFilename = $this->options['image_dir'].$this->getUrlFor($image);
@@ -225,15 +158,7 @@ class ImageManager
         return $img instanceof InventionImage || $img instanceof GifImage ? $img : $newFilename;
     }
 
-    /**
-     * Handles an uploaded file.
-     *
-     * @param UploadedFile $file
-     * @param bool         $flush
-     *
-     * @return Image
-     */
-    public function handleUpload(UploadedFile $file, $flush = false)
+    public function handleUpload(UploadedFile $file, bool $flush = false): Image
     {
         $image = new Image();
 
@@ -276,15 +201,7 @@ class ImageManager
         return $image;
     }
 
-    /**
-     * Handle an upload from server.
-     *
-     * @param File $file
-     * @param bool $flush
-     *
-     * @return Image
-     */
-    public function handleCopy(File $file, $flush = false)
+    public function handleCopy(File $file, bool $flush = false): Image
     {
         $image = new Image();
 
@@ -330,15 +247,7 @@ class ImageManager
         return $image;
     }
 
-    /**
-     * Clones an image.
-     *
-     * @param Image $originalImage
-     * @param bool  $flush
-     *
-     * @return Image
-     */
-    public function cloneImage(Image $originalImage, $flush = false)
+    public function cloneImage(Image $originalImage, bool $flush = false): Image
     {
         $image = clone $originalImage;
 
@@ -360,19 +269,9 @@ class ImageManager
     }
 
     /**
-     * Resize image.
-     *
-     * @param InventionImage $image
-     * @param Image          $originalImage
-     * @param string         $originalFilename
-     * @param string         $newFilename
-     * @param string         $size
-     * @param string         $aspectString
-     * @param bool           $isMock
-     *
      * @return InventionImage|GifImage|string
      */
-    private function resize(InventionImage $image, Image $originalImage, $originalFilename, $newFilename, $size, $aspectString, $isMock = false)
+    private function resize(InventionImage $image, Image $originalImage, string $originalFilename, string $newFilename, string $size, string $aspectString, bool $isMock = false)
     {
         $origWidth = $image->getWidth();
         $origHeight = $image->getHeight();
@@ -451,20 +350,7 @@ class ImageManager
         return $newFilename;
     }
 
-    /**
-     * Crom an image.
-     *
-     * @param Image $image
-     * @param int   $x
-     * @param int   $y
-     * @param int   $width
-     * @param int   $height
-     * @param bool  $greyscale
-     * @param bool  $flush
-     *
-     * @return string
-     */
-    public function cropImage(Image $image, $x, $y, $width, $height, $greyscale = false, $flush = false)
+    public function cropImage(Image $image, int $x, int $y, int $width, int $height, bool $greyscale = false, bool $flush = false): string
     {
         $originalFilename = $this->options['image_dir'].$this->getUrlFor($image);
 
@@ -529,19 +415,11 @@ class ImageManager
     }
 
     /**
-     * Rotate image.
-     *
-     * @param Image  $image
-     * @param string $direction left or right
-     * @param bool   $flush
-     *
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
-    public function rotate(Image $image, $direction = 'right', $flush = false)
+    public function rotate(Image $image, string $direction = 'right', bool $flush = false): string
     {
-        if (!in_array($direction, ['left', 'right'], true)) {
+        if (!\in_array($direction, ['left', 'right'], true)) {
             throw new InvalidArgumentException(sprintf('Argument 2 of %s has to be either left or right. "%s" given.', __METHOD__, $direction));
         }
 
@@ -603,16 +481,7 @@ class ImageManager
         return $originalFilename;
     }
 
-    /**
-     * Delete an image.
-     *
-     * @param Image $image
-     * @param bool  $keepOriginal
-     * @param bool  $purge
-     *
-     * @return $this
-     */
-    public function delete(Image $image, $keepOriginal = false, $purge = false)
+    public function delete(Image $image, bool $keepOriginal = false, bool $purge = false): self
     {
         // delete files
         foreach ($this->getSizes() as $size => $sizeVal) {
@@ -637,14 +506,7 @@ class ImageManager
         return $this;
     }
 
-    /**
-     * Get image by hash.
-     *
-     * @param string $hash
-     *
-     * @return Image|null
-     */
-    public function getImageByHash($hash)
+    public function getImageByHash(string $hash): ?Image
     {
         $image = $this->managerRegistry->getRepository(Image::class)->findOneByHash($hash);
 
@@ -656,8 +518,6 @@ class ImageManager
     }
 
     /**
-     * Lazy loads aspects.
-     *
      * @return Aspect[]
      */
     private function getAspects()
@@ -675,8 +535,6 @@ class ImageManager
     }
 
     /**
-     * Lazy loads sizes.
-     *
      * @return Size[]
      */
     private function getSizes()

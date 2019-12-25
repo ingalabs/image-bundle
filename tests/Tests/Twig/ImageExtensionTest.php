@@ -13,13 +13,14 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Twig\ImageExtension;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
- * ImageExtensionTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageExtensionTest extends \PHPUnit_Framework_TestCase
+class ImageExtensionTest extends TestCase
 {
     public function testImage()
     {
@@ -31,10 +32,10 @@ class ImageExtensionTest extends \PHPUnit_Framework_TestCase
         $managerRegistry = $this->getManagerRegistryMock();
         $imageManager = new ImageManager($managerRegistry, ['prefix' => '/images']);
 
-        $loader = new \Twig_Loader_Array([
+        $loader = new ArrayLoader([
             'index.html' => '{{ image(image) }}',
         ]);
-        $twig = new \Twig_Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
+        $twig = new Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
         $twig->addExtension(new ImageExtension($imageManager));
 
         $this->assertSame('/images/01/01234567/01234567890123456789012345678901_or_or.jpg', $twig->render('index.html', ['image' => $image]));
@@ -51,10 +52,10 @@ class ImageExtensionTest extends \PHPUnit_Framework_TestCase
         $managerRegistry = $this->getManagerRegistryMock();
         $imageManager = new ImageManager($managerRegistry, ['prefix' => '/images']);
 
-        $loader = new \Twig_Loader_Array([
+        $loader = new ArrayLoader([
             'index.html' => '{{ image(image, {\'size\': \'sm\', \'aspect\': \'1x1\', \'show_last_modified\': true}) }}',
         ]);
-        $twig = new \Twig_Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
+        $twig = new Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
         $twig->addExtension(new ImageExtension($imageManager));
 
         $this->assertSame('/images/01/01234567/01234567890123456789012345678901_sm_1x1.jpg?timestamp=522538840', $twig->render('index.html', ['image' => $image]));
@@ -67,10 +68,10 @@ class ImageExtensionTest extends \PHPUnit_Framework_TestCase
         $managerRegistry = $this->getManagerRegistryMock();
         $imageManager = new ImageManager($managerRegistry, ['prefix' => '/images']);
 
-        $loader = new \Twig_Loader_Array([
+        $loader = new ArrayLoader([
             'index.html' => '{{ image(image) }}',
         ]);
-        $twig = new \Twig_Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
+        $twig = new Environment($loader, ['debug' => false, 'cache' => false, 'autoescape' => 'html', 'optimizations' => 0]);
         $twig->addExtension(new ImageExtension($imageManager));
 
         $this->assertSame('', $twig->render('index.html', ['image' => $image]));

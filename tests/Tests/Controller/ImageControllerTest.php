@@ -15,14 +15,13 @@ use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * ImageControllerTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageControllerTest extends \PHPUnit_Framework_TestCase
+class ImageControllerTest extends TestCase
 {
     use ExceptionWrapperTestCaseTrait;
 
@@ -37,7 +36,7 @@ class ImageControllerTest extends \PHPUnit_Framework_TestCase
         $imageManager
             ->expects($this->once())
             ->method('getImageByHash')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
         $imageManager
             ->expects($this->once())
             ->method('generate');
@@ -83,7 +82,7 @@ class ImageControllerTest extends \PHPUnit_Framework_TestCase
         $imageManager
             ->expects($this->once())
             ->method('getImageByHash')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
         $imageManager
             ->expects($this->once())
             ->method('generate')

@@ -11,38 +11,22 @@ namespace IngaLabs\Bundle\ImageBundle\Controller;
 
 use IngaLabs\Bundle\ImageBundle\Exception\ImageExceptionInterface;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * ImageController.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageController
 {
-    /**
-     * @var ImageManager
-     */
     private $imageManager;
 
-    /**
-     * Constructor.
-     *
-     * @param ImageManager $imageManager
-     */
     public function __construct(ImageManager $imageManager)
     {
         $this->imageManager = $imageManager;
     }
 
-    /**
-     * ShowAction.
-     *
-     * The main controller.
-     *
-     * @return Response
-     */
-    public function showAction($hash, $size, $aspect)
+    public function showAction(string $hash, string $size, string $aspect): Response
     {
         try {
             $image = $this->imageManager->getImageByHash($hash);

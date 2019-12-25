@@ -10,110 +10,52 @@
 namespace IngaLabs\Bundle\ImageBundle\Model;
 
 /**
- * Aspect.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class Aspect
 {
-    /**
-     * @var int
-     */
     private $id;
-
-    /**
-     * @var string
-     */
     private $shortName;
-
-    /**
-     * @var int
-     */
     private $width;
-
-    /**
-     * @var int
-     */
     private $height;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set shortName.
-     *
-     * @param string $shortName
-     *
-     * @return $this
-     */
-    public function setShortName($shortName)
+    public function setShortName(string $shortName): self
     {
         $this->shortName = $shortName;
 
         return $this;
     }
 
-    /**
-     * Get shortName.
-     *
-     * @return string
-     */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * Set width.
-     *
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setWidth($width)
+    public function setWidth(?int $width): self
     {
         $this->width = $width;
 
         return $this;
     }
 
-    /**
-     * Get width.
-     *
-     * @return int
-     */
-    public function getWidth()
+    public function getWidth(): ?int
     {
         return $this->width;
     }
 
-    /**
-     * Set height.
-     *
-     * @param int $height
-     *
-     * @return $this
-     */
-    public function setHeight($height)
+    public function setHeight(?int $height): self
     {
         $this->height = $height;
 
         return $this;
     }
 
-    /**
-     * Get height.
-     *
-     * @return int
-     */
-    public function getHeight()
+    public function getHeight(): ?int
     {
         return $this->height;
     }

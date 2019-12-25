@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\AspectRepositoryInterface;
 
 /**
- * AspectRepository.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class AspectRepository extends EntityRepository implements AspectRepositoryInterface

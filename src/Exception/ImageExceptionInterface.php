@@ -10,8 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Exception;
 
 /**
- * ImageExceptionInterface.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 interface ImageExceptionInterface

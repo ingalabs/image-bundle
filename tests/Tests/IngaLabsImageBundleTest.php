@@ -15,14 +15,13 @@ use Doctrine\ORM\Version;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\Compiler\ConfigPass;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\IngaLabsImageExtension;
 use IngaLabs\Bundle\ImageBundle\IngaLabsImageBundle;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * IngaLabsImageBundleTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class IngaLabsImageBundleTest extends \PHPUnit_Framework_TestCase
+class IngaLabsImageBundleTest extends TestCase
 {
     public function testConfigCompilerPass()
     {

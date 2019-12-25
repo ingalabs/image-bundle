@@ -10,8 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Exception;
 
 /**
- * IOException.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IOException extends \RuntimeException implements ImageExceptionInterface

@@ -10,12 +10,13 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests\Model;
 
 use IngaLabs\Bundle\ImageBundle\Model\Size;
+use PHPUnit\Framework\TestCase;
 
-class SizeTest extends \PHPUnit_Framework_TestCase
+/**
+ * @author Antal Áron <antalaron@antalaron.hu>
+ */
+class SizeTest extends TestCase
 {
-    /**
-     * @var Size
-     */
     protected $object;
 
     protected function setUp()
