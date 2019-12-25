@@ -26,7 +26,7 @@ class ImageController
         $this->imageManager = $imageManager;
     }
 
-    public function showAction(string $hash, int $size, int $aspect): Response
+    public function showAction(string $hash, string $size, string $aspect): Response
     {
         try {
             $image = $this->imageManager->getImageByHash($hash);

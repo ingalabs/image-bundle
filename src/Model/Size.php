@@ -35,14 +35,14 @@ class Size
         return $this->shortName;
     }
 
-    public function setMaxSize(int $maxSize): self
+    public function setMaxSize(?int $maxSize): self
     {
         $this->maxSize = $maxSize;
 
         return $this;
     }
 
-    public function getMaxSize(): int
+    public function getMaxSize(): ?int
     {
         return $this->maxSize;
     }

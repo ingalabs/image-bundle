@@ -417,7 +417,7 @@ class ImageManager
     /**
      * @throws InvalidArgumentException
      */
-    public function rotate(Image $image, string $direction = 'right', bool $flush = false): sting
+    public function rotate(Image $image, string $direction = 'right', bool $flush = false): string
     {
         if (!\in_array($direction, ['left', 'right'], true)) {
             throw new InvalidArgumentException(sprintf('Argument 2 of %s has to be either left or right. "%s" given.', __METHOD__, $direction));

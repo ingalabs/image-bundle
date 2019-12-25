@@ -32,8 +32,13 @@ class ConfigPassTest extends AbstractCompilerPassTestCase
     {
         $this->setUpContainer();
 
-        $this->expectExceptionWrapper('RuntimeException', '/^Either parameter/');
         $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'ingalabs_image.image_manager',
+            0,
+            new Reference('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE)
+        );
     }
 
     public function testORMServiceCalls()
@@ -46,19 +51,6 @@ class ConfigPassTest extends AbstractCompilerPassTestCase
             'ingalabs_image.image_manager',
             0,
             new Reference('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE)
-        );
-    }
-
-    public function testMongodbServiceCalls()
-    {
-        $this->setUpContainer(['ingalabs_image.backend_type_mongodb' => true]);
-
-        $this->compile();
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
-            'ingalabs_image.image_manager',
-            0,
-            new Reference('doctrine_mongodb', ContainerInterface::NULL_ON_INVALID_REFERENCE)
         );
     }
 

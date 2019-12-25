@@ -26,10 +26,10 @@ class ImageRepositoryTraitTest extends TestCase
             ->expects($this->once())
             ->method('findOneBy')
             ->willReturnCallback(function ($criteria) {
-                return $criteria;
+                return null;
             });
 
-        $this->assertSame(['hash' => 'foo_bar'], $repository->findOneByHash('foo_bar'));
+        $this->assertSame(null, $repository->findOneByHash('foo_bar'));
     }
 }
 
