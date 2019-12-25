@@ -10,8 +10,9 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests\Model;
 
 use IngaLabs\Bundle\ImageBundle\Model\Image;
+use PHPUnit\Framework\TestCase;
 
-class ImageTest extends \PHPUnit_Framework_TestCase
+class ImageTest extends TestCase
 {
     /**
      * @var Image

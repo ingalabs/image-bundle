@@ -10,8 +10,9 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests\Model;
 
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
+use PHPUnit\Framework\TestCase;
 
-class AspectTest extends \PHPUnit_Framework_TestCase
+class AspectTest extends TestCase
 {
     /**
      * @var Aspect

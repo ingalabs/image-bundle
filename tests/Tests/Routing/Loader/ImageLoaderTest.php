@@ -12,13 +12,14 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\Routing\Loader;
 use IngaLabs\Bundle\ImageBundle\Exception\LoaderException;
 use IngaLabs\Bundle\ImageBundle\Routing\Loader\ImageLoader;
 use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ImageLoaderTest.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageLoaderTest extends \PHPUnit_Framework_TestCase
+class ImageLoaderTest extends TestCase
 {
     use ExceptionWrapperTestCaseTrait;
 

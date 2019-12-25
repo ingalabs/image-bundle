@@ -10,13 +10,14 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests\Helper;
 
 use IngaLabs\Bundle\ImageBundle\Helper\GifImage;
+use PHPUnit\Framework\TestCase;
 
 /**
  * GifImageTest.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class GifImageTest extends \PHPUnit_Framework_TestCase
+class GifImageTest extends TestCase
 {
     /**
      * @var GifImage

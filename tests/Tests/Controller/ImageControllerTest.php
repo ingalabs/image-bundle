@@ -15,6 +15,7 @@ use IngaLabs\Bundle\ImageBundle\Exception\InvalidArgumentException;
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -22,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageControllerTest extends \PHPUnit_Framework_TestCase
+class ImageControllerTest extends TestCase
 {
     use ExceptionWrapperTestCaseTrait;
 

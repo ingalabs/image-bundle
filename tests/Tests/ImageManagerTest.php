@@ -23,6 +23,7 @@ use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryInterface;
 use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
 use Intervention\Image\Image as InventionImage;
 use Intervention\Image\ImageManager as InventionManager;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\File;
@@ -34,7 +35,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageManagerTest extends \PHPUnit_Framework_TestCase
+class ImageManagerTest extends TestCase
 {
     use ExceptionWrapperTestCaseTrait;
 

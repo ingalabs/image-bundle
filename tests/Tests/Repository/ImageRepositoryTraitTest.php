@@ -11,13 +11,14 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ImageRepositoryTraitTest.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageRepositoryTraitTest extends \PHPUnit_Framework_TestCase
+class ImageRepositoryTraitTest extends TestCase
 {
     public function testFindOneByHashCallsTheAbstractMethod()
     {
