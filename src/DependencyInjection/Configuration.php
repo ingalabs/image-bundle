@@ -24,18 +24,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->enumNode('doctrine_driver')
-                    ->values(['orm', 'mongodb'])
-                    ->defaultValue('orm')
-                ->end()
                 ->scalarNode('image_dir')
                     ->defaultValue('%kernel.root_dir%/../web')
                 ->end()
                 ->scalarNode('prefix')
                     ->defaultValue('/assets/images')
-                ->end()
-                ->scalarNode('driver')
-                    ->defaultValue('gd')
                 ->end()
                 ->booleanNode('mock_image')
                     ->defaultValue('%kernel.debug%')

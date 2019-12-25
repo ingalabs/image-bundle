@@ -10,7 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Doctrine\ORM\Version;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\Compiler\ConfigPass;
 use IngaLabs\Bundle\ImageBundle\DependencyInjection\IngaLabsImageExtension;
@@ -40,16 +39,6 @@ class IngaLabsImageBundle extends Bundle
                     $mappings,
                     [],
                     'ingalabs_image.backend_type_orm',
-                    $aliases
-            ));
-        }
-
-        if (class_exists(DoctrineMongoDBMappingsPass::class)) {
-            $container->addCompilerPass(
-                DoctrineMongoDBMappingsPass::createYamlMappingDriver(
-                    $mappings,
-                    [],
-                    'ingalabs_image.backend_type_mongodb',
                     $aliases
             ));
         }
