@@ -15,8 +15,6 @@ use IngaLabs\Bundle\ImageBundle\Tests\ExceptionWrapperTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ImageLoaderTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageLoaderTest extends TestCase

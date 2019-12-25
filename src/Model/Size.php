@@ -10,81 +10,39 @@
 namespace IngaLabs\Bundle\ImageBundle\Model;
 
 /**
- * Size.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class Size
 {
-    /**
-     * @var int
-     */
     private $id;
-
-    /**
-     * @var string
-     */
     private $shortName;
-
-    /**
-     * @var int
-     */
     private $maxSize;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set shortName.
-     *
-     * @param string $shortName
-     *
-     * @return $this
-     */
-    public function setShortName($shortName)
+    public function setShortName(string $shortName): self
     {
         $this->shortName = $shortName;
 
         return $this;
     }
 
-    /**
-     * Get shortName.
-     *
-     * @return string
-     */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * Set maxSize.
-     *
-     * @param int $maxSize
-     *
-     * @return $this
-     */
-    public function setMaxSize($maxSize)
+    public function setMaxSize(int $maxSize): self
     {
         $this->maxSize = $maxSize;
 
         return $this;
     }
 
-    /**
-     * Get maxSize.
-     *
-     * @return int
-     */
-    public function getMaxSize()
+    public function getMaxSize(): int
     {
         return $this->maxSize;
     }

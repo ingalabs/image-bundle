@@ -11,47 +11,28 @@ namespace IngaLabs\Bundle\ImageBundle\Twig;
 
 use IngaLabs\Bundle\ImageBundle\ImageManager;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
- * ImageExtension.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
-class ImageExtension extends \Twig_Extension
+class ImageExtension extends AbstractExtension
 {
-    /**
-     * @var ImageManager
-     */
     private $imageManager;
 
-    /**
-     * Constructor.
-     *
-     * @param ImageManager $imageManager
-     */
     public function __construct(ImageManager $imageManager)
     {
         $this->imageManager = $imageManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('image', [$this, 'getUrlFor']),
+            new TwigFunction('image', [$this, 'getUrlFor']),
         ];
     }
 
-    /**
-     * Get Url for.
-     *
-     * @param Image|null $image
-     * @param array      $options
-     *
-     * @return string
-     */
     public function getUrlFor(Image $image = null, array $options = [])
     {
         if (null === $image) {

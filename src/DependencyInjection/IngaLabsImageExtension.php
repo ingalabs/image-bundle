@@ -15,15 +15,10 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * IngaLabsImageExtension.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IngaLabsImageExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -36,9 +31,6 @@ class IngaLabsImageExtension extends Extension
         $loader->load('services.yml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAlias()
     {
         return 'ingalabs_image';

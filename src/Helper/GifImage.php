@@ -10,67 +10,37 @@
 namespace IngaLabs\Bundle\ImageBundle\Helper;
 
 /**
- * GifImage.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class GifImage
 {
     const MIME_TYPE = 'image/gif';
 
-    /**
-     * @var string
-     */
     private $content;
 
-    /**
-     * Constructor.
-     *
-     * @param string $content
-     */
-    public function __construct($content = '')
+    public function __construct(string $content = '')
     {
         $this->content = $content;
     }
 
-    /**
-     * Set content.
-     *
-     * @param string $content
-     */
-    public function setContent($content)
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * Get content.
-     *
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * Get mime.
-     *
-     * @return string
-     */
-    public function mime()
+    public function mime(): string
     {
         return static::MIME_TYPE;
     }
 
-    /**
-     * String conversion.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getContent();
     }

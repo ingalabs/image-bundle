@@ -13,8 +13,6 @@ use IngaLabs\Bundle\ImageBundle\DependencyInjection\IngaLabsImageExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
- * IngaLabsImageExtensionTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IngaLabsImageExtensionTest extends AbstractExtensionTestCase

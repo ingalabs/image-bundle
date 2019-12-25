@@ -12,8 +12,6 @@ namespace IngaLabs\Bundle\ImageBundle\Repository;
 use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
- * AspectRepositoryInterface.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 interface AspectRepositoryInterface extends ObjectRepository

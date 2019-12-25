@@ -14,8 +14,6 @@ use IngaLabs\Bundle\ImageBundle\Repository\ImageRepositoryTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ImageRepositoryTraitTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageRepositoryTraitTest extends TestCase
@@ -27,9 +25,9 @@ class ImageRepositoryTraitTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('findOneBy')
-            ->will($this->returnCallback(function ($criteria) {
+            ->willReturnCallback(function ($criteria) {
                 return $criteria;
-            }));
+            });
 
         $this->assertSame(['hash' => 'foo_bar'], $repository->findOneByHash('foo_bar'));
     }

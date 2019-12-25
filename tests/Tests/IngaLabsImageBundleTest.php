@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * IngaLabsImageBundleTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IngaLabsImageBundleTest extends TestCase

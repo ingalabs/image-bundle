@@ -10,8 +10,6 @@
 namespace IngaLabs\Bundle\ImageBundle\Exception;
 
 /**
- * LoaderException.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class LoaderException extends \RuntimeException implements ImageExceptionInterface

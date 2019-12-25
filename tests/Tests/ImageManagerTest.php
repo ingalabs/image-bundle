@@ -31,8 +31,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * ImageManagerTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageManagerTest extends TestCase
@@ -330,10 +328,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -376,7 +374,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
             'image_dir' => __DIR__.'/../Fixtures/web',
@@ -386,10 +384,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -431,10 +429,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -477,10 +475,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -520,10 +518,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -561,10 +559,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -602,7 +600,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
             'image_dir' => __DIR__.'/../Fixtures/web',
@@ -612,10 +610,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -652,10 +650,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -693,10 +691,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -744,8 +742,8 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
+            \dirname($path),
+            \dirname(\dirname($path)),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -753,10 +751,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($newImage);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -803,7 +801,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -816,8 +814,8 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($image);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
+            \dirname($path),
+            \dirname(\dirname($path)),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -825,10 +823,10 @@ class ImageManagerTest extends TestCase
 
         $path = __DIR__.'/../Fixtures/web'.$imageManager->getUrlFor($newImage);
         $toRemove = [
-            dirname($path),
-            dirname(dirname($path)),
-            dirname(dirname(dirname($path))),
-            dirname(dirname(dirname(dirname($path)))),
+            \dirname($path),
+            \dirname(\dirname($path)),
+            \dirname(\dirname(\dirname($path))),
+            \dirname(\dirname(\dirname(\dirname($path)))),
         ];
         unlink($path);
         rmdir($toRemove[0]);
@@ -1417,7 +1415,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -1842,7 +1840,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -1926,7 +1924,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->never())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -1980,7 +1978,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->never())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -2035,7 +2033,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->never())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -2090,7 +2088,7 @@ class ImageManagerTest extends TestCase
         $managerRegistry
             ->expects($this->once())
             ->method('getManagerForClass')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $imageManager = new ImageManager($managerRegistry, [
             'prefix' => '/images',
@@ -2232,10 +2230,10 @@ class ImageManagerTest extends TestCase
             ->getMock();
         $imageRepository
             ->method('find')
-            ->will($this->returnValueMap($images));
+            ->willReturnMap($images);
         $imageRepository
             ->method('findOneByHash')
-            ->will($this->returnValueMap($imagesByHash));
+            ->willReturnMap($imagesByHash);
 
         $aspectRepository = $this
             ->getMockBuilder(AspectRepositoryInterface::class)
@@ -2243,10 +2241,10 @@ class ImageManagerTest extends TestCase
             ->getMock();
         $aspectRepository
             ->method('find')
-            ->will($this->returnValueMap($aspects));
+            ->willReturnMap($aspects);
         $aspectRepository
             ->method('findAll')
-            ->will($this->returnValue($aspectsArray));
+            ->willReturn($aspectsArray);
 
         $sizeRepository = $this
             ->getMockBuilder(SizeRepositoryInterface::class)
@@ -2254,10 +2252,10 @@ class ImageManagerTest extends TestCase
             ->getMock();
         $sizeRepository
             ->method('find')
-            ->will($this->returnValueMap($sizes));
+            ->willReturnMap($sizes);
         $sizeRepository
             ->method('findAll')
-            ->will($this->returnValue($sizesArray));
+            ->willReturn($sizesArray);
 
         $repositoryMap = [
             [Image::class, null, $imageRepository],
@@ -2271,7 +2269,7 @@ class ImageManagerTest extends TestCase
             ->getMock();
         $managerRegistry
             ->method('getRepository')
-            ->will($this->returnValueMap($repositoryMap));
+            ->willReturnMap($repositoryMap);
 
         return $managerRegistry;
     }

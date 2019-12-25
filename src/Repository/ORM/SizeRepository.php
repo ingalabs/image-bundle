@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
 
 /**
- * SizeRepository.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class SizeRepository extends EntityRepository implements SizeRepositoryInterface

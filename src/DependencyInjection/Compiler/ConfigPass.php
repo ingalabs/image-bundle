@@ -34,9 +34,7 @@ class ConfigPass implements CompilerPassInterface
         } elseif ($container->hasParameter('ingalabs_image.backend_type_mongodb')) {
             $doctrine = 'doctrine_mongodb';
         } else {
-            throw new \RuntimeException(
-                'Either parameter "ingalabs_image.backend_type_orm" or '.
-                '"ingalabs_image.backend_type_mongodb" should be set.');
+            throw new \RuntimeException('Either parameter "ingalabs_image.backend_type_orm" or '.'"ingalabs_image.backend_type_mongodb" should be set.');
         }
 
         $config = [];

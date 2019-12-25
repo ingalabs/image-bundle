@@ -19,8 +19,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * ConfigPassTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ConfigPassTest extends AbstractCompilerPassTestCase

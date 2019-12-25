@@ -18,8 +18,6 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
 /**
- * ImageExtensionTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageExtensionTest extends TestCase

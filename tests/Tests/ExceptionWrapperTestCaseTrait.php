@@ -10,25 +10,15 @@
 namespace IngaLabs\Bundle\ImageBundle\Tests;
 
 /**
- * ExceptionWrapperTestCaseTrait.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 trait ExceptionWrapperTestCaseTrait
 {
     protected function expectExceptionWrapper($exception, $regexp = null)
     {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException($exception);
-            if (null !== $regexp) {
-                $this->expectExceptionMessageRegExp($regexp);
-            }
-        } else {
-            if (null !== $regexp) {
-                $this->setExpectedExceptionRegExp($exception, $regexp);
-            } else {
-                $this->setExpectedException($exception);
-            }
+        $this->expectException($exception);
+        if (null !== $regexp) {
+            $this->expectExceptionMessageRegExp($regexp);
         }
     }
 }

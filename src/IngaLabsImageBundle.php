@@ -18,15 +18,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * IngaLabsImageBundle.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class IngaLabsImageBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -62,9 +57,6 @@ class IngaLabsImageBundle extends Bundle
         $container->addCompilerPass(new ConfigPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContainerExtension()
     {
         return new IngaLabsImageExtension();

@@ -15,38 +15,21 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * ImageLoader.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageLoader extends Loader
 {
-    /**
-     * @var bool
-     */
     private $loaded = false;
-
-    /**
-     * @var array
-     */
     private $options = [
         'prefix' => '/assets/images',
         'file_levels' => '2:8',
     ];
 
-    /**
-     * Constructor.
-     *
-     * @param array $options
-     */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         $this->options = array_merge($this->options, array_intersect_key($options, $this->options));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
@@ -87,9 +70,6 @@ class ImageLoader extends Loader
         return $routes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($resource, $type = null)
     {
         return 'ingalabs_image' === $type;

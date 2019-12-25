@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * ImageControllerTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ImageControllerTest extends TestCase
@@ -38,7 +36,7 @@ class ImageControllerTest extends TestCase
         $imageManager
             ->expects($this->once())
             ->method('getImageByHash')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
         $imageManager
             ->expects($this->once())
             ->method('generate');
@@ -84,7 +82,7 @@ class ImageControllerTest extends TestCase
         $imageManager
             ->expects($this->once())
             ->method('getImageByHash')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
         $imageManager
             ->expects($this->once())
             ->method('generate')

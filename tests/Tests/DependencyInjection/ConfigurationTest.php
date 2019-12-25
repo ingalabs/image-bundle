@@ -14,8 +14,6 @@ use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ConfigurationTest.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class ConfigurationTest extends TestCase

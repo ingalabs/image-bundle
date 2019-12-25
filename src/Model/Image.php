@@ -10,293 +10,136 @@
 namespace IngaLabs\Bundle\ImageBundle\Model;
 
 /**
- * Image.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class Image
 {
-    /**
-     * @var string[]
-     */
     public static $supportedMimeTypes = [
         'image/png',
         'image/jpeg',
         'image/gif',
     ];
 
-    /**
-     * @var int|null
-     */
     private $id;
-
-    /**
-     * @var string
-     */
     private $type;
-
-    /**
-     * @var string
-     */
     private $hash;
-
-    /**
-     * @var int
-     */
     private $width;
-
-    /**
-     * @var int
-     */
     private $height;
-
-    /**
-     * @var string|null
-     */
     private $caption;
-
-    /**
-     * @var string
-     */
     private $originalName;
-
-    /**
-     * @var \DateTime
-     */
     private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
     private $lastModifiedAt;
-
-    /**
-     * @var bool
-     */
     private $animated = false;
 
-    /**
-     * Get id.
-     *
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set type.
-     *
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * Get type.
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * Set hash.
-     *
-     * @param string $hash
-     *
-     * @return $this
-     */
-    public function setHash($hash)
+    public function setHash(string $hash): self
     {
         $this->hash = $hash;
 
         return $this;
     }
 
-    /**
-     * Get hash.
-     *
-     * @return string
-     */
-    public function getHash()
+    public function getHash(): string
     {
         return $this->hash;
     }
 
-    /**
-     * Set width.
-     *
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setWidth($width)
+    public function setWidth(int $width): self
     {
         $this->width = $width;
 
         return $this;
     }
 
-    /**
-     * Get width.
-     *
-     * @return int
-     */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * Set height.
-     *
-     * @param int $height
-     *
-     * @return $this
-     */
-    public function setHeight($height)
+    public function setHeight(int $height): self
     {
         $this->height = $height;
 
         return $this;
     }
 
-    /**
-     * Get height.
-     *
-     * @return int
-     */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Set caption.
-     *
-     * @param string|null $caption
-     *
-     * @return $this
-     */
-    public function setCaption($caption = null)
+    public function setCaption(?string $caption): self
     {
         $this->caption = $caption;
 
         return $this;
     }
 
-    /**
-     * Get caption.
-     *
-     * @return string|null
-     */
-    public function getCaption()
+    public function getCaption(): ?string
     {
         return $this->caption;
     }
 
-    /**
-     * Set originalName.
-     *
-     * @param string $originalName
-     *
-     * @return $this
-     */
-    public function setOriginalName($originalName)
+    public function setOriginalName(string $originalName): self
     {
         $this->originalName = $originalName;
 
         return $this;
     }
 
-    /**
-     * Get originalName.
-     *
-     * @return string
-     */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->originalName;
     }
 
-    /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set lastModifiedAt.
-     *
-     * @param \DateTime $lastModifiedAt
-     *
-     * @return $this
-     */
-    public function setLastModifiedAt($lastModifiedAt)
+    public function setLastModifiedAt(\DateTimeInterface $lastModifiedAt): self
     {
         $this->lastModifiedAt = $lastModifiedAt;
 
         return $this;
     }
 
-    /**
-     * Get lastModifiedAt.
-     *
-     * @return \DateTime
-     */
-    public function getLastModifiedAt()
+    public function getLastModifiedAt(): \DateTimeInterface
     {
         return $this->lastModifiedAt;
     }
 
-    /**
-     * Set animated.
-     *
-     * @param bool
-     *
-     * @return $this
-     */
-    public function setAnimated($animated = true)
+    public function setAnimated(bool $animated = true): self
     {
-        $this->animated = (bool) $animated;
+        $this->animated = $animated;
 
         return $this;
     }
 
-    /**
-     * Is animated.
-     *
-     * @return bool
-     */
-    public function isAnimated()
+    public function isAnimated(): bool
     {
         return $this->animated;
     }

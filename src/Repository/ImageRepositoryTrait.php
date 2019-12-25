@@ -12,20 +12,11 @@ namespace IngaLabs\Bundle\ImageBundle\Repository;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 
 /**
- * ImageRepositoryTrait.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 trait ImageRepositoryTrait
 {
-    /**
-     * Find one by hash.
-     *
-     * @param string $hash
-     *
-     * @return null|Image
-     */
-    public function findOneByHash($hash)
+    public function findOneByHash(string $hash): ?Image
     {
         return $this->findOneBy([
             'hash' => $hash,

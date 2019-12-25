@@ -13,18 +13,9 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use IngaLabs\Bundle\ImageBundle\Model\Image;
 
 /**
- * ImageRepositoryInterface.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 interface ImageRepositoryInterface extends ObjectRepository
 {
-    /**
-     * Find one by hash.
-     *
-     * @param string $hash
-     *
-     * @return null|Image
-     */
-    public function findOneByHash($hash);
+    public function findOneByHash(string $hash): ?Image;
 }

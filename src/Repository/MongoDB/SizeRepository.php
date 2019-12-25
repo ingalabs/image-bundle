@@ -13,8 +13,6 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 use IngaLabs\Bundle\ImageBundle\Repository\SizeRepositoryInterface;
 
 /**
- * SizeRepository.
- *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
 class SizeRepository extends DocumentRepository implements SizeRepositoryInterface

@@ -12,11 +12,11 @@ namespace IngaLabs\Bundle\ImageBundle\Tests\Model;
 use IngaLabs\Bundle\ImageBundle\Model\Aspect;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @author Antal Áron <antalaron@antalaron.hu>
+ */
 class AspectTest extends TestCase
 {
-    /**
-     * @var Aspect
-     */
     protected $object;
 
     protected function setUp()
